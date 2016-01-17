@@ -11,7 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 /**
  * Created by JerunTrajko on 1/15/16.
@@ -78,6 +80,19 @@ public class profile_activity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        populateListView();
+    }
+
+    private void populateListView()
+    {
+        String[] options = {"My Profile", "My Gym", "Trophies", "Friends", "Health Stats"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,               //context
+                R.layout.text_profile,  //layout
+                options);        //workouts done
+        ListView list = (ListView) findViewById(R.id.optionList);
+        list.setAdapter(adapter);
     }
 
     @Override

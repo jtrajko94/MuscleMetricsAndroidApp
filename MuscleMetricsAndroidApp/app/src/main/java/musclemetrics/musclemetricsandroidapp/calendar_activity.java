@@ -11,13 +11,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CalendarView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * Created by JerunTrajko on 1/15/16.
  */
 public class calendar_activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    CalendarView calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +84,46 @@ public class calendar_activity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        populateListView();
+        initializeCalendar();
+    }
+
+    private void initializeCalendar()
+    {
+        calendar = (CalendarView) findViewById(R.id.calendar);
+        // sets whether to show the week number.
+        calendar.setShowWeekNumber(false);
+        // sets the first day of week according to Calendar.
+        // here we set Monday as the first day of the Calendar
+        calendar.setFirstDayOfWeek(2);
+        //The background color for the selected week.
+        //calendar.setSelectedWeekBackgroundColor("#");
+        //sets the color for the dates of an unfocused month.
+        //calendar.setUnfocusedMonthDateColor(000000);
+        //sets the color for the separator line between weeks.
+        //calendar.setWeekSeparatorLineColor(getResources().getColor(R.color.transparent));
+        //sets the color for the vertical bar shown at the beginning and at the end of the selected date.
+        //calendar.setSelectedDateVerticalBar(R.color.darkgreen);
+        //sets the listener to be notified upon selected date change.
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
+                Toast.makeText(getApplicationContext(), day + "/" + month + "/" + year, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+    private void populateListView()
+    {
+        String[] myWorkouts = {"Bench", "Squat", "Deadlift", "Row", "Machine", "Leg Press", "Shoulder"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this,               //context
+                R.layout.text_calendar,  //layout
+                myWorkouts);        //workouts done
+        ListView list = (ListView) findViewById(R.id.workoutList);
+        list.setAdapter(adapter);
     }
 
     @Override
