@@ -22,63 +22,15 @@ public class library_activity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("In Library Create ----------------------");
+        System.out.println("Creating Layout ----------------------");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.full_toolbar_lib);
 
         //Set bottom toolbar buttons
-        final Button work = (Button) findViewById(R.id.workoutButton);
-        work.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intentApp = new Intent(library_activity.this,
-                        workout_activity.class);
-                startActivity(intentApp);
-            }
-        });
+        setBottomToolbar();
 
-        final Button cal = (Button) findViewById(R.id.calendarButton);
-        cal.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intentApp = new Intent(library_activity.this,
-                        calendar_activity.class);
-                startActivity(intentApp);
-                // Perform action on click
-            }
-        });
-
-        final Button pro = (Button) findViewById(R.id.progressButton);
-        pro.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                Intent intentApp = new Intent(library_activity.this,
-                        progress_activity.class);
-                startActivity(intentApp);// Perform action on click
-            }
-        });
-
-        final Button prof = (Button) findViewById(R.id.profileButton);
-        prof.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intentApp = new Intent(library_activity.this,
-                        profile_activity.class);
-                startActivity(intentApp);
-                // Perform action on click
-            }
-        });
-
-
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        //Set Top Toolbar
+        setTopToolbar();
     }
 
     @Override
@@ -136,5 +88,65 @@ public class library_activity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    //Set Bottom Toolbar
+    private void setBottomToolbar()
+    {
+        final Button work = (Button) findViewById(R.id.workoutButton);
+        work.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(library_activity.this,
+                        workout_activity.class);
+                startActivity(intentApp);
+            }
+        });
+
+        final Button cal = (Button) findViewById(R.id.calendarButton);
+        cal.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(library_activity.this,
+                        calendar_activity.class);
+                startActivity(intentApp);
+                // Perform action on click
+            }
+        });
+
+        final Button pro = (Button) findViewById(R.id.progressButton);
+        pro.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent intentApp = new Intent(library_activity.this,
+                        progress_activity.class);
+                startActivity(intentApp);// Perform action on click
+            }
+        });
+
+        final Button prof = (Button) findViewById(R.id.profileButton);
+        prof.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(library_activity.this,
+                        profile_activity.class);
+                startActivity(intentApp);
+                // Perform action on click
+            }
+        });
+    }
+
+
+    //Set Top Toolbar
+    private void setTopToolbar()
+    {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 }
