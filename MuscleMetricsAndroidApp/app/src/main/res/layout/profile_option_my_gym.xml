@@ -34,11 +34,129 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="musclemetrics.musclemetricsandroidapp.options_my_gym">
 
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_below="@+id/linearLayout3"
+            android:background="@android:color/darker_gray"
+            android:orientation="horizontal"
+            android:gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:weightSum="1"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <Button
+                android:id="@+id/workoutButton"
+                android:layout_width="65dp"
+                android:layout_height="59dp"
+                android:text="workout"
+                />
+
+            <Button
+                android:id="@+id/libraryButton"
+                android:layout_width="65dp"
+                android:layout_height="59dp"
+                android:text="library"
+                />
+
+            <Button
+                android:id="@+id/calendarButton"
+                android:layout_width="65dp"
+                android:layout_height="59dp"
+                android:text="calendar"
+                />
+
+            <Button
+                android:id="@+id/progressButton"
+                android:layout_width="65dp"
+                android:layout_height="59dp"
+                android:text="progress"
+                />
+
+            <Button
+                android:id="@+id/profileButton"
+                android:layout_width="65dp"
+                android:layout_height="59dp"
+                android:background="#FFFFFF"
+                android:text="profile"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set Gym"
+            android:id="@+id/button2"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/linearLayout4" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Gym Is Here!"
-            android:id="@+id/textView2" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Trainers:"
+            android:id="@+id/textView5"
+            android:layout_above="@+id/button2"
+            android:layout_alignRight="@+id/button2"
+            android:layout_alignEnd="@+id/button2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Phone:"
+            android:id="@+id/textView6"
+            android:layout_above="@+id/textView5"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/textView5"
+            android:layout_alignEnd="@+id/textView5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Address:"
+            android:id="@+id/textView11"
+            android:layout_above="@+id/textView6"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/textView6"
+            android:layout_alignEnd="@+id/textView6" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Gym Title"
+            android:id="@+id/textView13"
+            android:layout_above="@+id/textView11"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/textView11"
+            android:layout_alignEnd="@+id/textView11" />
+
+        <com.google.android.gms.maps.MapView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/view"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/textView13" />
+
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

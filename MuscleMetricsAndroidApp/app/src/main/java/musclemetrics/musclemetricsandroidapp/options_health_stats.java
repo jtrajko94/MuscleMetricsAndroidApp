@@ -26,6 +26,7 @@ public class options_health_stats extends AppCompatActivity
         setContentView(R.layout.full_toolbar_option_health_stats);
 
         setTopToolbar();
+        setBottomToolbar();
     }
 
     @Override
@@ -96,5 +97,57 @@ public class options_health_stats extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    //set navigation toolbar at the bottom
+    private void setBottomToolbar()
+    {
+        final Button work = (Button) findViewById(R.id.workoutButton);
+        work.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(options_health_stats.this,
+                        workout_activity.class);
+                startActivity(intentApp);
+            }
+        });
+
+        final Button lib = (Button) findViewById(R.id.libraryButton);
+        lib.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(options_health_stats.this,
+                        library_activity.class);
+                startActivity(intentApp);
+                // Perform action on click
+            }
+        });
+
+        final Button cal = (Button) findViewById(R.id.calendarButton);
+        cal.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(options_health_stats.this,
+                        calendar_activity.class);
+                startActivity(intentApp);
+                // Perform action on click
+            }
+        });
+
+        final Button prog = (Button) findViewById(R.id.progressButton);
+        prog.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(options_health_stats.this,
+                        progress_activity.class);
+                startActivity(intentApp);
+                // Perform action on click
+            }
+        });
+        final Button prof = (Button) findViewById(R.id.profileButton);
+        prof.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(options_health_stats.this,
+                        profile_activity.class);
+                startActivity(intentApp);
+                // Perform action on click
+            }
+        });
     }
 }

@@ -13,6 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.maps.MapView;
+
 /**
  * Created by JerunTrajko on 1/18/16.
  */
@@ -25,7 +27,11 @@ public class options_my_gym extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.full_toolbar_option_gym);
 
+        MapView m = (MapView) findViewById(R.id.view);
+        m.onCreate(savedInstanceState);
+
         setTopToolbar();
+        setBottomToolbar();
     }
 
     @Override
@@ -96,5 +102,57 @@ public class options_my_gym extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    //set navigation toolbar at the bottom
+    private void setBottomToolbar()
+    {
+        final Button work = (Button) findViewById(R.id.workoutButton);
+        work.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(options_my_gym.this,
+                        workout_activity.class);
+                startActivity(intentApp);
+            }
+        });
+
+        final Button lib = (Button) findViewById(R.id.libraryButton);
+        lib.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(options_my_gym.this,
+                        library_activity.class);
+                startActivity(intentApp);
+                // Perform action on click
+            }
+        });
+
+        final Button cal = (Button) findViewById(R.id.calendarButton);
+        cal.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(options_my_gym.this,
+                        calendar_activity.class);
+                startActivity(intentApp);
+                // Perform action on click
+            }
+        });
+
+        final Button prog = (Button) findViewById(R.id.progressButton);
+        prog.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(options_my_gym.this,
+                        progress_activity.class);
+                startActivity(intentApp);
+                // Perform action on click
+            }
+        });
+        final Button prof = (Button) findViewById(R.id.profileButton);
+        prof.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(options_my_gym.this,
+                        profile_activity.class);
+                startActivity(intentApp);
+                // Perform action on click
+            }
+        });
     }
 }
