@@ -1,6 +1,7 @@
 package musclemetrics.musclemetricsandroidapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,20 +14,62 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.LimitLine;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+
+import java.util.ArrayList;
+
 public class workout_activity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    LineChart chart;
+    ArrayList<String> xVals = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.full_toolbar_work);
         System.out.println("Creating Workout View -----------------");
+        chart = (LineChart) findViewById(R.id.chart);
+
 
         //Setting Bottom Toolbar
         setBottomToolbar();
 
         //Setting Top Toolbar
         setTopToolbar();
+
+        setChart();
+
+        setBenchPress();
+        setSquat();
+
+        Legend l = chart.getLegend();
+        l.setFormSize(10f); // set the size of the legend forms/shapes
+        l.setForm(Legend.LegendForm.CIRCLE); // set what type of form/shape should be used
+        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+        l.setTextSize(12f);
+        l.setTextColor(Color.BLACK);
+        l.setXEntrySpace(5f); // set the space between the legend entries on the x-axis
+        l.setYEntrySpace(5f); // set the space between the legend entries on the y-axis
+
+        // set custom labels and colors
+        l.setCustom(ColorTemplate.VORDIPLOM_COLORS, new String[] { "Bench", "Squat", "Deadlift", "Press", "Row" });
+
+        //setDeadlift();
+        //setPress();
+        //setRow();
+
+        chart.invalidate(); // refresh
+
     }
 
     @Override
@@ -141,5 +184,237 @@ public class workout_activity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void setChart()
+    {
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(12f);
+        xAxis.setTextColor(Color.RED);
+        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setDrawLabels(true);
+
+        YAxis yAxis = chart.getAxisLeft();
+        yAxis.setTextSize(10f); // set the textsize
+        //yAxis.setAxisMaxValue(800f); // the axis maximum is 100
+        yAxis.setTextColor(Color.BLACK);
+        yAxis.setLabelCount(6, false);
+        //yAxis.setDrawLabels(false);
+
+        xVals.add("Jan"); xVals.add("Feb"); xVals.add("Mar"); xVals.add("Apr");
+        xVals.add("May"); xVals.add("Jun"); xVals.add("Jul"); xVals.add("Aug");
+        xVals.add("Sept"); xVals.add("Oct"); xVals.add("Nov"); xVals.add("Dec");
+    }
+
+    private void setBenchPress()
+    {
+        ArrayList<Entry> benchPoints = new ArrayList<Entry>();
+        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
+
+        Entry c1e1 = new Entry(100.000f, 0); // 0 == quarter 1
+        benchPoints.add(c1e1);
+        Entry c1e2 = new Entry(110.000f, 1); // 1 == quarter 2 ...
+        benchPoints.add(c1e2);
+        Entry c1e3 = new Entry(120.000f, 2); // 0 == quarter 1
+        benchPoints.add(c1e3);
+        Entry c1e4 = new Entry(130.000f, 3); // 1 == quarter 2 ...
+        benchPoints.add(c1e4);
+        Entry c1e5 = new Entry(135.000f, 4); // 0 == quarter 1
+        benchPoints.add(c1e5);
+        Entry c1e6 = new Entry(140.000f, 5); // 1 == quarter 2 ...
+        benchPoints.add(c1e6);
+        Entry c1e7 = new Entry(140.000f, 6); // 0 == quarter 1
+        benchPoints.add(c1e7);
+        Entry c1e8 = new Entry(143.000f, 7); // 1 == quarter 2 ...
+        benchPoints.add(c1e8);
+        Entry c1e9 = new Entry(145.000f, 8); // 0 == quarter 1
+        benchPoints.add(c1e9);
+        Entry c1e10 = new Entry(150.000f, 9); // 1 == quarter 2 ...
+        benchPoints.add(c1e10);
+        Entry c1e11 = new Entry(150.000f, 10); // 0 == quarter 1
+        benchPoints.add(c1e11);
+        Entry c1e12 = new Entry(155.000f, 11); // 1 == quarter 2 ...
+        benchPoints.add(c1e12);
+        // and so on ...
+
+        LineDataSet setComp1 = new LineDataSet(benchPoints, "Bench");
+        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        dataSets.add(setComp1);
+
+        LineData data = new LineData(xVals, dataSets);
+        chart.setData(data);
+        //chart.invalidate(); // refresh
+    }
+
+    private void setSquat()
+    {
+        ArrayList<Entry> benchPoints = new ArrayList<Entry>();
+        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
+
+        Entry c1e1 = new Entry(100.000f, 0); // 0 == quarter 1
+        benchPoints.add(c1e1);
+        Entry c1e2 = new Entry(130.000f, 1); // 1 == quarter 2 ...
+        benchPoints.add(c1e2);
+        Entry c1e3 = new Entry(150.000f, 2); // 0 == quarter 1
+        benchPoints.add(c1e3);
+        Entry c1e4 = new Entry(160.000f, 3); // 1 == quarter 2 ...
+        benchPoints.add(c1e4);
+        Entry c1e5 = new Entry(160.000f, 4); // 0 == quarter 1
+        benchPoints.add(c1e5);
+        Entry c1e6 = new Entry(180.000f, 5); // 1 == quarter 2 ...
+        benchPoints.add(c1e6);
+        Entry c1e7 = new Entry(190.000f, 6); // 0 == quarter 1
+        benchPoints.add(c1e7);
+        Entry c1e8 = new Entry(195.000f, 7); // 1 == quarter 2 ...
+        benchPoints.add(c1e8);
+        Entry c1e9 = new Entry(200.000f, 8); // 0 == quarter 1
+        benchPoints.add(c1e9);
+        Entry c1e10 = new Entry(230.000f, 9); // 1 == quarter 2 ...
+        benchPoints.add(c1e10);
+        Entry c1e11 = new Entry(250.000f, 10); // 0 == quarter 1
+        benchPoints.add(c1e11);
+        Entry c1e12 = new Entry(255.000f, 11); // 1 == quarter 2 ...
+        benchPoints.add(c1e12);
+        // and so on ...
+
+        LineDataSet setComp1 = new LineDataSet(benchPoints, "Squat");
+        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        dataSets.add(setComp1);
+
+        LineData data = new LineData(xVals, dataSets);
+        chart.setData(data);
+        //chart.invalidate(); // refresh
+    }
+
+    private void setDeadlift()
+    {
+        ArrayList<Entry> benchPoints = new ArrayList<Entry>();
+        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
+
+        Entry c1e1 = new Entry(100.000f, 0); // 0 == quarter 1
+        benchPoints.add(c1e1);
+        Entry c1e2 = new Entry(110.000f, 1); // 1 == quarter 2 ...
+        benchPoints.add(c1e2);
+        Entry c1e3 = new Entry(120.000f, 2); // 0 == quarter 1
+        benchPoints.add(c1e3);
+        Entry c1e4 = new Entry(130.000f, 3); // 1 == quarter 2 ...
+        benchPoints.add(c1e4);
+        Entry c1e5 = new Entry(135.000f, 4); // 0 == quarter 1
+        benchPoints.add(c1e5);
+        Entry c1e6 = new Entry(140.000f, 5); // 1 == quarter 2 ...
+        benchPoints.add(c1e6);
+        Entry c1e7 = new Entry(140.000f, 6); // 0 == quarter 1
+        benchPoints.add(c1e7);
+        Entry c1e8 = new Entry(143.000f, 7); // 1 == quarter 2 ...
+        benchPoints.add(c1e8);
+        Entry c1e9 = new Entry(145.000f, 8); // 0 == quarter 1
+        benchPoints.add(c1e9);
+        Entry c1e10 = new Entry(150.000f, 9); // 1 == quarter 2 ...
+        benchPoints.add(c1e10);
+        Entry c1e11 = new Entry(150.000f, 10); // 0 == quarter 1
+        benchPoints.add(c1e11);
+        Entry c1e12 = new Entry(250.000f, 11); // 1 == quarter 2 ...
+        benchPoints.add(c1e12);
+        // and so on ...
+
+        LineDataSet setComp1 = new LineDataSet(benchPoints, "Bench");
+        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        dataSets.add(setComp1);
+
+        LineData data = new LineData(xVals, dataSets);
+        chart.setData(data);
+        chart.invalidate(); // refresh
+    }
+
+    private void setRow()
+    {
+        ArrayList<Entry> benchPoints = new ArrayList<Entry>();
+        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
+
+        Entry c1e1 = new Entry(100.000f, 0); // 0 == quarter 1
+        benchPoints.add(c1e1);
+        Entry c1e2 = new Entry(110.000f, 1); // 1 == quarter 2 ...
+        benchPoints.add(c1e2);
+        Entry c1e3 = new Entry(120.000f, 2); // 0 == quarter 1
+        benchPoints.add(c1e3);
+        Entry c1e4 = new Entry(130.000f, 3); // 1 == quarter 2 ...
+        benchPoints.add(c1e4);
+        Entry c1e5 = new Entry(135.000f, 4); // 0 == quarter 1
+        benchPoints.add(c1e5);
+        Entry c1e6 = new Entry(140.000f, 5); // 1 == quarter 2 ...
+        benchPoints.add(c1e6);
+        Entry c1e7 = new Entry(140.000f, 6); // 0 == quarter 1
+        benchPoints.add(c1e7);
+        Entry c1e8 = new Entry(143.000f, 7); // 1 == quarter 2 ...
+        benchPoints.add(c1e8);
+        Entry c1e9 = new Entry(145.000f, 8); // 0 == quarter 1
+        benchPoints.add(c1e9);
+        Entry c1e10 = new Entry(150.000f, 9); // 1 == quarter 2 ...
+        benchPoints.add(c1e10);
+        Entry c1e11 = new Entry(150.000f, 10); // 0 == quarter 1
+        benchPoints.add(c1e11);
+        Entry c1e12 = new Entry(250.000f, 11); // 1 == quarter 2 ...
+        benchPoints.add(c1e12);
+        // and so on ...
+
+        LineDataSet setComp1 = new LineDataSet(benchPoints, "Bench");
+        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        dataSets.add(setComp1);
+
+        LineData data = new LineData(xVals, dataSets);
+        chart.setData(data);
+        chart.invalidate(); // refresh
+    }
+
+    private void setPress()
+    {
+        ArrayList<Entry> benchPoints = new ArrayList<Entry>();
+        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
+
+        Entry c1e1 = new Entry(100.000f, 0); // 0 == quarter 1
+        benchPoints.add(c1e1);
+        Entry c1e2 = new Entry(110.000f, 1); // 1 == quarter 2 ...
+        benchPoints.add(c1e2);
+        Entry c1e3 = new Entry(120.000f, 2); // 0 == quarter 1
+        benchPoints.add(c1e3);
+        Entry c1e4 = new Entry(130.000f, 3); // 1 == quarter 2 ...
+        benchPoints.add(c1e4);
+        Entry c1e5 = new Entry(135.000f, 4); // 0 == quarter 1
+        benchPoints.add(c1e5);
+        Entry c1e6 = new Entry(140.000f, 5); // 1 == quarter 2 ...
+        benchPoints.add(c1e6);
+        Entry c1e7 = new Entry(140.000f, 6); // 0 == quarter 1
+        benchPoints.add(c1e7);
+        Entry c1e8 = new Entry(143.000f, 7); // 1 == quarter 2 ...
+        benchPoints.add(c1e8);
+        Entry c1e9 = new Entry(145.000f, 8); // 0 == quarter 1
+        benchPoints.add(c1e9);
+        Entry c1e10 = new Entry(150.000f, 9); // 1 == quarter 2 ...
+        benchPoints.add(c1e10);
+        Entry c1e11 = new Entry(150.000f, 10); // 0 == quarter 1
+        benchPoints.add(c1e11);
+        Entry c1e12 = new Entry(250.000f, 11); // 1 == quarter 2 ...
+        benchPoints.add(c1e12);
+        // and so on ...
+
+        LineDataSet setComp1 = new LineDataSet(benchPoints, "Bench");
+        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        dataSets.add(setComp1);
+
+        LineData data = new LineData(xVals, dataSets);
+        chart.setData(data);
+        chart.invalidate(); // refresh
     }
 }
