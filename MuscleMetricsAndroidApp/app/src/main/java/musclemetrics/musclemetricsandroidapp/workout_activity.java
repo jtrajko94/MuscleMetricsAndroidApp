@@ -13,8 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -35,6 +39,8 @@ public class workout_activity extends AppCompatActivity
     LineChart chart;
     ArrayList<String> xVals = new ArrayList<String>();
     private Handler mHandler = new Handler();
+    private Spinner dropdown;
+    private Toolbar toolbar;
     private ProgressBar mProgress;
     private int mProgressStatus = 0;
 
@@ -45,14 +51,15 @@ public class workout_activity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.full_toolbar_work);
         System.out.println("Creating Workout View -----------------");
-        chart = (LineChart) findViewById(R.id.chart);
-
 
         //Setting Bottom Toolbar
         setBottomToolbar();
 
         //Setting Top Toolbar
         setTopToolbar();
+
+        //Setting spinner menu on top toolbar
+        setTopSpinner();
 
         //Setting Circular Progress Bar
         setProgressBar();
@@ -174,6 +181,11 @@ public class workout_activity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -186,6 +198,8 @@ public class workout_activity extends AppCompatActivity
 
     private void setChart()
     {
+        chart = (LineChart) findViewById(R.id.chart);
+
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextSize(12f);
@@ -452,5 +466,30 @@ public class workout_activity extends AppCompatActivity
                 }
             }
         }).start();
+    }
+
+    private void setTopSpinner()
+    {
+        dropdown = (Spinner)findViewById(R.id.spinner_nav);
+        String[] items = new String[]{"","Option 1", "Option 2", "Option 3"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
+
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView adapter, View v, int i, long lng) {
+
+                String selectedItem =  adapter.getItemAtPosition(i).toString();
+                Toast.makeText(getBaseContext(),selectedItem,
+                        Toast.LENGTH_SHORT).show();
+                //or this can be also right: selecteditem = level[i];
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView)
+            {
+
+            }
+        });
     }
 }
