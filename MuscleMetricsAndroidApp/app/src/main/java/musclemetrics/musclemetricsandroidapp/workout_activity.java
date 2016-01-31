@@ -3,6 +3,7 @@ package musclemetrics.musclemetricsandroidapp;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
@@ -32,6 +34,11 @@ public class workout_activity extends AppCompatActivity
 
     LineChart chart;
     ArrayList<String> xVals = new ArrayList<String>();
+    private Handler mHandler = new Handler();
+    private ProgressBar mProgress;
+    private int mProgressStatus = 0;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +54,13 @@ public class workout_activity extends AppCompatActivity
         //Setting Top Toolbar
         setTopToolbar();
 
+        //Setting Circular Progress Bar
+        setProgressBar();
+
         setChart();
 
         setBenchPress();
         setSquat();
-
-        Legend l = chart.getLegend();
-        l.setFormSize(10f); // set the size of the legend forms/shapes
-        l.setForm(Legend.LegendForm.CIRCLE); // set what type of form/shape should be used
-        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
-        l.setTextSize(12f);
-        l.setTextColor(Color.BLACK);
-        l.setXEntrySpace(5f); // set the space between the legend entries on the x-axis
-        l.setYEntrySpace(5f); // set the space between the legend entries on the y-axis
-
-        // set custom labels and colors
-        l.setCustom(ColorTemplate.VORDIPLOM_COLORS, new String[] { "Bench", "Squat", "Deadlift", "Press", "Row" });
 
         //setDeadlift();
         //setPress();
@@ -206,6 +204,18 @@ public class workout_activity extends AppCompatActivity
         xVals.add("Jan"); xVals.add("Feb"); xVals.add("Mar"); xVals.add("Apr");
         xVals.add("May"); xVals.add("Jun"); xVals.add("Jul"); xVals.add("Aug");
         xVals.add("Sept"); xVals.add("Oct"); xVals.add("Nov"); xVals.add("Dec");
+
+        Legend l = chart.getLegend();
+        l.setFormSize(10f); // set the size of the legend forms/shapes
+        l.setForm(Legend.LegendForm.CIRCLE); // set what type of form/shape should be used
+        l.setPosition(Legend.LegendPosition.BELOW_CHART_LEFT);
+        l.setTextSize(12f);
+        l.setTextColor(Color.BLACK);
+        l.setXEntrySpace(5f); // set the space between the legend entries on the x-axis
+        l.setYEntrySpace(5f); // set the space between the legend entries on the y-axis
+
+        // set custom labels and colors
+        l.setCustom(ColorTemplate.VORDIPLOM_COLORS, new String[] { "Bench", "Squat", "Deadlift", "Press", "Row" });
     }
 
     private void setBenchPress()
@@ -416,5 +426,31 @@ public class workout_activity extends AppCompatActivity
         LineData data = new LineData(xVals, dataSets);
         chart.setData(data);
         chart.invalidate(); // refresh
+    }
+
+    private void setProgressBar()
+    {
+        mProgress = (ProgressBar) findViewById(R.id.circularProgressbar);
+
+        // Start lengthy operation in a background thread
+        new Thread(new Runnable() {
+            public void run() {
+                while (mProgressStatus < 100) {
+                    mProgressStatus = mProgressStatus + 1;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    // Update the progress bar
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            mProgress.setProgress(mProgressStatus);
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 }

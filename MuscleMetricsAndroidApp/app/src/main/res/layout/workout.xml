@@ -146,6 +146,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="QuickClip Not Connected"
+        android:layout_centerHorizontal="true"
         android:id="@+id/textView17"
         android:layout_above="@+id/textView16"
         android:layout_toRightOf="@+id/imageButton2"
@@ -157,25 +158,13 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Quick Clip Not Connected"
+        android:layout_centerHorizontal="true"
         android:id="@+id/textView18"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Circle Diagram Goes Here"
-        android:id="@+id/textView20"
-        android:layout_below="@+id/textView14"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/textView18"
-        android:layout_alignRight="@+id/textView18"
-        android:layout_alignEnd="@+id/textView18" />
 
     <Button
         android:layout_width="wrap_content"
@@ -185,7 +174,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/textView16"
         android:layout_toEndOf="@+id/textView16"
-        android:layout_above="@+id/textView20" />
+        android:layout_alignBottom="@+id/textView15" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -203,6 +192,48 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView14"
+        xmlns:custom="http://schemas.android.com/tools"
+        android:layout_gravity="center_vertical"
+        android:layout_above="@+id/textView18"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/textView18"
+        android:layout_alignEnd="@+id/textView18">
+
+        <ProgressBar
+            android:layout_centerHorizontal="true"
+            android:id="@+id/circularProgressbar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:indeterminate="false"
+            android:progress="0"
+            android:max="100"
+            android:secondaryProgress="100"
+            android:progressDrawable="@drawable/circular" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Count Number"
+            android:id="@+id/repCount"
+            android:layout_alignRight="@+id/circularProgressbar"
+            android:layout_alignLeft="@+id/circularProgressbar"
+            android:gravity="center"
+            android:layout_alignBottom="@+id/circularProgressbar"
+            android:layout_alignTop="@+id/circularProgressbar"
+            />
+
+
+    </RelativeLayout>
 
 </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

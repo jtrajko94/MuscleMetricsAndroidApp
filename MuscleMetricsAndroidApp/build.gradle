@@ -14,11 +14,11 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://jitpack.io" }
+        maven {
+            url "https://jitpack.io"}
     }
 
     dependencies {
-        //compile 'com.github.PhilJay:MPAndroidChart:v2.2.0'
     }
 }
 
