@@ -40,66 +40,43 @@
             android:text="In Library!"
             android:id="@+id/textView2" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout4"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_below="@+id/linearLayout3"
-            android:background="@android:color/darker_gray"
+        <LinearLayout android:id="@+id/linearLayout4"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_gravity="bottom"
             android:gravity="bottom"
-            android:layout_alignParentBottom="true"
-            android:weightSum="1"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
-
-            <Button
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <Button android:text="Workout"
+                android:layout_height="wrap_content"
                 android:id="@+id/workoutButton"
-                android:layout_width="65dp"
-                android:layout_height="59dp"
-                android:text="workout"
-
-                />
-
-            <Button
+                android:layout_width="0dp"
+                android:layout_weight=".5" />
+            <Button android:text="Library"
+                android:layout_height="wrap_content"
                 android:id="@+id/libraryButton"
-                android:layout_width="65dp"
-                android:layout_height="59dp"
-                android:background="#FFFFFF"
-                android:text="library"
-
-
-                />
-
-            <Button
+                android:background="#fff"
+                android:layout_width="0dp"
+                android:layout_weight=".5" />
+            <Button android:text="Calendar"
+                android:layout_height="wrap_content"
                 android:id="@+id/calendarButton"
-                android:layout_width="65dp"
-                android:layout_height="59dp"
-                android:text="calendar"
-
-
-                />
-
-            <Button
+                android:layout_width="0dp"
+                android:layout_weight=".5" />
+            <Button android:text="Progress"
+                android:layout_height="wrap_content"
                 android:id="@+id/progressButton"
-                android:layout_width="65dp"
-                android:layout_height="59dp"
-                android:text="progress"
-
-
-                />
-
-            <Button
+                android:layout_width="0dp"
+                android:layout_weight=".5" />
+            <Button android:text="Profile"
+                android:layout_height="wrap_content"
                 android:id="@+id/profileButton"
-                android:layout_width="65dp"
-                android:layout_height="59dp"
-                android:text="profile"
-
-
-                />
-
+                android:layout_width="0dp"
+                android:layout_weight=".5" />
         </LinearLayout>
 
     </RelativeLayout>

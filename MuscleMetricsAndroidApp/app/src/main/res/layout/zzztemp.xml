@@ -1,33 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:custom="http://schemas.android.com/tools"
-    android:orientation="vertical"
+<LinearLayout android:id="@+id/linearLayout3"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_gravity="bottom"
+    android:layout_alignParentBottom="true"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
-
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:indeterminate="false"
-        android:progress="0"
-        android:max="100"
-        android:secondaryProgress="100"
-        android:progressDrawable="@drawable/circular" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="5 s"
-        android:id="@+id/txt_secondsleft"
-        android:layout_alignRight="@+id/progressBar1"
-        android:layout_alignLeft="@+id/progressBar1"
-        android:gravity="center"
-        android:layout_alignBottom="@+id/progressBar1"
-        android:layout_alignTop="@+id/progressBar1"
-        />
-
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button android:text="Workout" android:layout_height="wrap_content"
+        android:id="@+id/workoutButton" android:layout_width="0dp"
+        android:layout_weight=".5" />
+    <Button android:text="Library" android:layout_height="wrap_content"
+        android:id="@+id/libraryButton" android:layout_width="0dp"
+        android:layout_weight=".5" />
+    <Button android:text="Calendar" android:layout_height="wrap_content"
+        android:id="@+id/calendarButton" android:layout_width="0dp"
+        android:layout_weight=".5" />
+    <Button android:text="Progress" android:layout_height="wrap_content"
+        android:id="@+id/progressButton" android:layout_width="0dp"
+        android:layout_weight=".5" />
+    <Button android:text="Profile" android:layout_height="wrap_content"
+        android:id="@+id/profileButton" android:layout_width="0dp"
+        android:layout_weight=".5" />
 </LinearLayout>
