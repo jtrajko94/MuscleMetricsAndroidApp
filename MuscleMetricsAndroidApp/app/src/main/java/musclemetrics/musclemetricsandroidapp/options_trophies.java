@@ -16,8 +16,8 @@ import android.widget.Button;
 /**
  * Created by JerunTrajko on 1/18/16.
  */
-public class options_trophies extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class options_trophies extends AppCompatActivity{
+        //implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,7 @@ public class options_trophies extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
+/*
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -82,13 +82,15 @@ public class options_trophies extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    */
 
     //Set the top toolbar
     private void setTopToolbar()
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Trophies");
         setSupportActionBar(toolbar);
-
+/*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -97,6 +99,7 @@ public class options_trophies extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        */
     }
 
     //set navigation toolbar at the bottom
