@@ -31,6 +31,7 @@ public class calendar_activity extends AppCompatActivity {
         //TODO: Not sure why it takes so long to create the calendar
         System.out.println("Creating Calendar ----------------------");
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0, 0);
         setContentView(R.layout.full_toolbar_cal);
 
         //Set the navigation toolbar at the bottom of the page
@@ -136,7 +137,9 @@ public class calendar_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(calendar_activity.this,
                         workout_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
+                finish();
             }
         });
 
@@ -145,8 +148,9 @@ public class calendar_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(calendar_activity.this,
                         library_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -155,8 +159,9 @@ public class calendar_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(calendar_activity.this,
                         progress_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -165,8 +170,9 @@ public class calendar_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(calendar_activity.this,
                         profile_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
     }

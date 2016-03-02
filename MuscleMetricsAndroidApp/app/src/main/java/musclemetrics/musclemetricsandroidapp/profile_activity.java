@@ -29,6 +29,7 @@ public class profile_activity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("In Library Create ----------------------");
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0, 0);
         setContentView(R.layout.full_toolbar_prof);
 
         //Set bottom toolbar
@@ -57,30 +58,35 @@ public class profile_activity extends AppCompatActivity
                     Intent intentApp = new Intent(profile_activity.this,
                             options_my_profile.class);
                     startActivity(intentApp);
+                    finish();
                 }
                 if(position == 1)
                 {
                     Intent intentApp = new Intent(profile_activity.this,
                             options_my_gym.class);
                     startActivity(intentApp);
+                    finish();
                 }
                 else if(position == 2)
                 {
                     Intent intentApp = new Intent(profile_activity.this,
                             options_trophies.class);
                     startActivity(intentApp);
+                    finish();
                 }
                 else if(position == 3)
                 {
                     Intent intentApp = new Intent(profile_activity.this,
                             options_friends.class);
                     startActivity(intentApp);
+                    finish();
                 }
                 else if(position == 4)
                 {
                     Intent intentApp = new Intent(profile_activity.this,
                             options_health_stats.class);
                     startActivity(intentApp);
+                    finish();
                 }
             }
         });
@@ -165,7 +171,9 @@ public class profile_activity extends AppCompatActivity
             public void onClick(View v) {
                 Intent intentApp = new Intent(profile_activity.this,
                         workout_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
+                finish();
             }
         });
 
@@ -174,8 +182,9 @@ public class profile_activity extends AppCompatActivity
             public void onClick(View v) {
                 Intent intentApp = new Intent(profile_activity.this,
                         library_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -184,8 +193,9 @@ public class profile_activity extends AppCompatActivity
             public void onClick(View v) {
                 Intent intentApp = new Intent(profile_activity.this,
                         calendar_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -194,8 +204,9 @@ public class profile_activity extends AppCompatActivity
             public void onClick(View v) {
                 Intent intentApp = new Intent(profile_activity.this,
                         progress_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
     }

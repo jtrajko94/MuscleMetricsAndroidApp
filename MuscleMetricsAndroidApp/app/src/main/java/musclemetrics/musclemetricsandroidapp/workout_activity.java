@@ -48,6 +48,7 @@ public class workout_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0, 0);
         setContentView(R.layout.full_toolbar_work);
         System.out.println("Creating Workout View -----------------");
 
@@ -115,7 +116,10 @@ public class workout_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(workout_activity.this,
                         library_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
+                finish();
+                //overridePendingTransition(0, 0);
             }
         });
 
@@ -124,8 +128,10 @@ public class workout_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(workout_activity.this,
                         calendar_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -134,8 +140,10 @@ public class workout_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(workout_activity.this,
                         progress_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -144,8 +152,10 @@ public class workout_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(workout_activity.this,
                         profile_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
     }

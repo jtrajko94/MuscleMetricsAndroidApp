@@ -1,5 +1,9 @@
 package musclemetrics.musclemetricsandroidapp;
 
+/**
+ * Created by JerunTrajko on 3/1/16.
+ */
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
@@ -10,34 +14,65 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
+import info.hoang8f.android.segmented.SegmentedGroup;
 
 /**
  * Created by JerunTrajko on 1/15/16.
  */
-public class library_activity extends AppCompatActivity {
+public class excercise_instruction_activity extends AppCompatActivity {
+
+    SegmentedGroup segmentedGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("Creating Layout ----------------------");
+        System.out.println("Creating Excercise ----------------------");
         super.onCreate(savedInstanceState);
         overridePendingTransition(0, 0);
-        setContentView(R.layout.full_toolbar_lib);
+        setContentView(R.layout.full_toolbar_lib_exc_ins);
 
         //Set bottom toolbar buttons
         setBottomToolbar();
 
         //Set Top Toolbar
         setTopToolbar();
+
+        final RadioButton muscleR = (RadioButton) findViewById(R.id.muscles);
+        final RadioButton videoR = (RadioButton) findViewById(R.id.video);
+
+        segmentedGroup = (SegmentedGroup) findViewById(R.id.segmented2);
+        segmentedGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == videoR.getId())
+                {
+                    Intent intentApp = new Intent(excercise_instruction_activity.this,
+                            excercise_video_activity.class);
+                    intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intentApp);
+                    finish();
+                }
+                else if(checkedId == muscleR.getId())
+                {
+                    Intent intentApp = new Intent(excercise_instruction_activity.this,
+                            excercise_muscle_activity.class);
+                    intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intentApp);
+                    finish();
+                }
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        Intent intentApp = new Intent(excercise_instruction_activity.this,
+                library_activity.class);
+        intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intentApp);
+        finish();
     }
 
     @Override
@@ -68,8 +103,19 @@ public class library_activity extends AppCompatActivity {
         final Button work = (Button) findViewById(R.id.workoutButton);
         work.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intentApp = new Intent(library_activity.this,
+                Intent intentApp = new Intent(excercise_instruction_activity.this,
                         workout_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intentApp);
+                finish();
+            }
+        });
+
+        final Button lib = (Button) findViewById(R.id.libraryButton);
+        lib.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(excercise_instruction_activity.this,
+                        library_activity.class);
                 intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
                 finish();
@@ -79,7 +125,7 @@ public class library_activity extends AppCompatActivity {
         final Button cal = (Button) findViewById(R.id.calendarButton);
         cal.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intentApp = new Intent(library_activity.this,
+                Intent intentApp = new Intent(excercise_instruction_activity.this,
                         calendar_activity.class);
                 intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
@@ -91,7 +137,7 @@ public class library_activity extends AppCompatActivity {
         pro.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent intentApp = new Intent(library_activity.this,
+                Intent intentApp = new Intent(excercise_instruction_activity.this,
                         progress_activity.class);
                 intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
@@ -102,19 +148,8 @@ public class library_activity extends AppCompatActivity {
         final Button prof = (Button) findViewById(R.id.profileButton);
         prof.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intentApp = new Intent(library_activity.this,
+                Intent intentApp = new Intent(excercise_instruction_activity.this,
                         profile_activity.class);
-                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intentApp);
-                finish();
-            }
-        });
-
-        final Button exc = (Button) findViewById(R.id.excButton);
-        exc.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intentApp = new Intent(library_activity.this,
-                        excercise_muscle_activity.class);
                 intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
                 finish();
@@ -128,7 +163,8 @@ public class library_activity extends AppCompatActivity {
     private void setTopToolbar()
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Library");
+        toolbar.setTitle("Excercise");
         setSupportActionBar(toolbar);
     }
 }
+

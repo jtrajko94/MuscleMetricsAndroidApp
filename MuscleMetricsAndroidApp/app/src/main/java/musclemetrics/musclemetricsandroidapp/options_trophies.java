@@ -23,6 +23,7 @@ public class options_trophies extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("In Library Create ----------------------");
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0, 0);
         setContentView(R.layout.full_toolbar_option_trophies);
 
         setTopToolbar();
@@ -34,6 +35,7 @@ public class options_trophies extends AppCompatActivity{
         Intent intentApp = new Intent(options_trophies.this,
                 profile_activity.class);
         startActivity(intentApp);
+        finish();
     }
 
     @Override
@@ -110,7 +112,9 @@ public class options_trophies extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_trophies.this,
                         workout_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
+                finish();
             }
         });
 
@@ -119,8 +123,9 @@ public class options_trophies extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_trophies.this,
                         library_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -129,8 +134,9 @@ public class options_trophies extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_trophies.this,
                         calendar_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -139,8 +145,9 @@ public class options_trophies extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_trophies.this,
                         progress_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -149,8 +156,9 @@ public class options_trophies extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_trophies.this,
                         profile_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
     }

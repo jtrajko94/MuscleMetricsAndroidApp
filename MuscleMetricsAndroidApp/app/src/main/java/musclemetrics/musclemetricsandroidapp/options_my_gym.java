@@ -24,6 +24,7 @@ public class options_my_gym extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("In Library Create ----------------------");
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0, 0);
         setContentView(R.layout.full_toolbar_option_gym);
 
         MapView m = (MapView) findViewById(R.id.view);
@@ -38,6 +39,7 @@ public class options_my_gym extends AppCompatActivity {
         Intent intentApp = new Intent(options_my_gym.this,
                 profile_activity.class);
         startActivity(intentApp);
+        finish();
     }
 
     @Override
@@ -78,7 +80,9 @@ public class options_my_gym extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_my_gym.this,
                         workout_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
+                finish();
             }
         });
 
@@ -87,8 +91,9 @@ public class options_my_gym extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_my_gym.this,
                         library_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -97,8 +102,9 @@ public class options_my_gym extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_my_gym.this,
                         calendar_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -107,8 +113,9 @@ public class options_my_gym extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_my_gym.this,
                         progress_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
         final Button prof = (Button) findViewById(R.id.profileButton);
@@ -116,8 +123,9 @@ public class options_my_gym extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_my_gym.this,
                         profile_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
     }

@@ -54,6 +54,7 @@ public class progress_activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("Starting Progress ----------------------");
+        overridePendingTransition(0, 0);;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.full_toolbar_prog);
 
@@ -141,7 +142,9 @@ public class progress_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(progress_activity.this,
                         workout_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
+                finish();
             }
         });
 
@@ -150,8 +153,9 @@ public class progress_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(progress_activity.this,
                         library_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -160,8 +164,9 @@ public class progress_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(progress_activity.this,
                         calendar_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -170,8 +175,9 @@ public class progress_activity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(progress_activity.this,
                         profile_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
     }

@@ -23,6 +23,7 @@ public class options_friends extends AppCompatActivity {
         System.out.println("In Library Create ----------------------");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.full_toolbar_option_friends);
+        overridePendingTransition(0, 0);
 
         setTopToolbar();
         setBottomToolbar();
@@ -33,6 +34,7 @@ public class options_friends extends AppCompatActivity {
         Intent intentApp = new Intent(options_friends.this,
                 profile_activity.class);
         startActivity(intentApp);
+        finish();
     }
 
     @Override
@@ -73,7 +75,9 @@ public class options_friends extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_friends.this,
                         workout_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
+                finish();
             }
         });
 
@@ -82,8 +86,9 @@ public class options_friends extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_friends.this,
                         library_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -92,8 +97,9 @@ public class options_friends extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_friends.this,
                         calendar_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -102,8 +108,9 @@ public class options_friends extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_friends.this,
                         progress_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
 
@@ -112,8 +119,9 @@ public class options_friends extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentApp = new Intent(options_friends.this,
                         profile_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
-                // Perform action on click
+                finish();
             }
         });
     }
