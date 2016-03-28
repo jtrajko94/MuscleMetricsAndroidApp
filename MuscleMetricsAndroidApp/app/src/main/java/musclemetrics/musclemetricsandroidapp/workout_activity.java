@@ -158,6 +158,19 @@ public class workout_activity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+        final Button pebble = (Button) findViewById(R.id.button3);
+        pebble.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(workout_activity.this,
+                        pebble_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intentApp);
+                finish();
+            }
+        });
     }
 
     private void setTopToolbar()

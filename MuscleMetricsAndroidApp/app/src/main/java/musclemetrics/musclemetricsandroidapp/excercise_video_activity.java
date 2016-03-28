@@ -5,6 +5,7 @@ package musclemetrics.musclemetricsandroidapp;
  */
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -14,8 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.MediaController;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.VideoView;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 
@@ -25,6 +28,10 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 public class excercise_video_activity extends AppCompatActivity {
 
     SegmentedGroup segmentedGroup;
+
+    private VideoView videoView;
+    private MediaController mController;
+    private Uri uriYouTube;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,15 @@ public class excercise_video_activity extends AppCompatActivity {
                 }
             }
         });
+
+        String path1="http://videocdn.bodybuilding.com/video/mp4/52000/53781m.mp4";
+
+        Uri uri=Uri.parse(path1);
+
+        VideoView video=(VideoView)findViewById(R.id.videoView);
+        video.setMediaController(new MediaController(this));
+        video.setVideoURI(uri);
+        video.start();
     }
 
     @Override
