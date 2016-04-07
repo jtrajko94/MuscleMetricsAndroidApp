@@ -2,14 +2,14 @@ package musclemetrics.musclemetricsandroidapp;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,10 +17,7 @@ import android.widget.Toast;
 import com.getpebble.android.kit.PebbleKit;
 import com.getpebble.android.kit.util.PebbleDictionary;
 
-import java.io.Console;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -30,9 +27,7 @@ import java.util.UUID;
 public class pebble_activity extends AppCompatActivity {
 
     private ListView listView;
-    private ArrayList<String> mDeviceList = new ArrayList<String>();
     private BluetoothAdapter mBluetoothAdapter;
-    private final static int REQUEST_ENABLE_BT = 1;
     public TextView textView;
     public String uuid;
     PebbleKit.PebbleDataReceiver dataReceiver;
@@ -102,13 +97,34 @@ public class pebble_activity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(arrayAdapter);
 
+        //Start the app!
+        PebbleKit.startAppOnPebble(getApplicationContext(), UUID.fromString("4eb9f670-e798-4ce5-918f-db6c38b23846"));
+
         //Set up the receiver to get data from pebble
         setPebbleReceiver();
 
-        //function to send data to pebble
-        sendPebbleInfo();
+        //Send data to pebble
+        final Button send = (Button) findViewById(R.id.send);
+        send.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                Log.d("Sending Data", "Sending...");
+                sendPebbleInfo();
+            }
+        });
 
-        PebbleKit.startAppOnPebble(getApplicationContext(), UUID.fromString("4eb9f670-e798-4ce5-918f-db6c38b23846"));
+        //Open the app and begin receiving data from pebble
+        final Button start = (Button) findViewById(R.id.start);
+        start.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                Log.d("Closing App", "Closing...");
+                PebbleKit.closeAppOnPebble(getApplicationContext(), UUID.fromString("4eb9f670-e798-4ce5-918f-db6c38b23846"));
+
+                Log.d("Starting App", "Starting...");
+                PebbleKit.startAppOnPebble(getApplicationContext(), UUID.fromString("4eb9f670-e798-4ce5-918f-db6c38b23846"));
+            }
+        });
     }
 
     //Send data to the pebble
@@ -129,12 +145,12 @@ public class pebble_activity extends AppCompatActivity {
         dict.addString(AppKeyContactName, contactName);
         dict.addInt32(AppKeyAge, age);
 
-        final UUID appUuid = UUID.fromString(uuid);
+        final UUID appUuid = UUID.fromString("4eb9f670-e798-4ce5-918f-db6c38b23846");
 
         // Send the dictionary
         PebbleKit.sendDataToPebble(getApplicationContext(), appUuid, dict);
         Log.d("Sending", "Info sent to pebble");
-        Log.d("uuid", "UUID is " + uuid);
+        //Log.d("uuid", "UUID is " + uuid);
         boolean connected = PebbleKit.isWatchConnected(getApplicationContext());
         Log.d("connected", Boolean.toString(connected));
     }
@@ -160,7 +176,7 @@ public class pebble_activity extends AppCompatActivity {
                 if(ageValue != null) {
                     // Read the integer value
                     int age = ageValue.intValue();
-                    Log.d("Fuck Yes", Integer.toString(age));
+                    Log.d("Received Value: ", Integer.toString(age));
                 }
 
 
