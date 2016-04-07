@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.getpebble.android.kit.PebbleKit;
 import com.getpebble.android.kit.util.PebbleDictionary;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +35,7 @@ public class pebble_activity extends AppCompatActivity {
     private final static int REQUEST_ENABLE_BT = 1;
     public TextView textView;
     public String uuid;
+    PebbleKit.PebbleDataReceiver dataReceiver;
 
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("Starting Progress ----------------------");
@@ -80,6 +82,7 @@ public class pebble_activity extends AppCompatActivity {
 
     public void getPairedDevices()
     {
+        //Get the pebble paired to this device
         ArrayList <String> arrayList = new ArrayList<String>();
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
@@ -99,9 +102,16 @@ public class pebble_activity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(arrayAdapter);
 
+        //Set up the receiver to get data from pebble
+        setPebbleReceiver();
+
+        //function to send data to pebble
         sendPebbleInfo();
+
+        PebbleKit.startAppOnPebble(getApplicationContext(), UUID.fromString("4eb9f670-e798-4ce5-918f-db6c38b23846"));
     }
 
+    //Send data to the pebble
     public void sendPebbleInfo()
     {
         // Create a new dictionary
@@ -125,5 +135,47 @@ public class pebble_activity extends AppCompatActivity {
         PebbleKit.sendDataToPebble(getApplicationContext(), appUuid, dict);
         Log.d("Sending", "Info sent to pebble");
         Log.d("uuid", "UUID is " + uuid);
+        boolean connected = PebbleKit.isWatchConnected(getApplicationContext());
+        Log.d("connected", Boolean.toString(connected));
+    }
+
+    //Get data from the pebble
+    public void setPebbleReceiver()
+    {
+        //UUID appUuid = UUID.fromString(uuid);
+        UUID appUuid = UUID.fromString("4eb9f670-e798-4ce5-918f-db6c38b23846");
+        dataReceiver = new PebbleKit.PebbleDataReceiver(appUuid) {
+
+            @Override
+            public void receiveData(Context context, int transaction_id,
+                                    PebbleDictionary dict) {
+                Log.d("Pebble Receive", "Received Data");
+
+                //example info
+
+                final int AppKeyAge = 3;
+
+                // If the tuple is present...
+                Long ageValue = dict.getInteger(AppKeyAge);
+                if(ageValue != null) {
+                    // Read the integer value
+                    int age = ageValue.intValue();
+                    Log.d("Fuck Yes", Integer.toString(age));
+                }
+
+
+                // A new AppMessage was received, tell Pebble
+                PebbleKit.sendAckToPebble(context, transaction_id);
+            }
+
+        };
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // Register the receiver
+        PebbleKit.registerReceivedDataHandler(getApplicationContext(), dataReceiver);
     }
 }
