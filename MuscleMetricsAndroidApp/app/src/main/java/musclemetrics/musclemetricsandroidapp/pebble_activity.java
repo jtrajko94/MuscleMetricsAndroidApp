@@ -167,18 +167,19 @@ public class pebble_activity extends AppCompatActivity {
                                     PebbleDictionary dict) {
                 Log.d("Pebble Receive", "Received Data");
 
-                //example info
-
-                final int AppKeyAge = 3;
-
                 // If the tuple is present...
-                Long ageValue = dict.getInteger(AppKeyAge);
-                if(ageValue != null) {
+                Long x = dict.getInteger(0);
+                Long y = dict.getInteger(1);
+                Long z = dict.getInteger(2);
+                if(x != null && y != null && z != null) {
                     // Read the integer value
-                    int age = ageValue.intValue();
-                    Log.d("Received Value: ", Integer.toString(age));
+                    int xval = x.intValue();
+                    int yval = y.intValue();
+                    int zval = z.intValue();
+                    Log.d("Received Value X: ", Integer.toString(xval));
+                    Log.d("Received Value Y: ", Integer.toString(yval));
+                    Log.d("Received Value Z: ", Integer.toString(zval));
                 }
-
 
                 // A new AppMessage was received, tell Pebble
                 PebbleKit.sendAckToPebble(context, transaction_id);
