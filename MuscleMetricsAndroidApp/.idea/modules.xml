@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MuscleMetricsAndroidApp.iml" filepath="$PROJECT_DIR$/MuscleMetricsAndroidApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/focusmotion-debug-mobile-pebble/focusmotion-debug-mobile-pebble.iml" filepath="$PROJECT_DIR$/focusmotion-debug-mobile-pebble/focusmotion-debug-mobile-pebble.iml" />
+      <module fileurl="file://$PROJECT_DIR$/focusmotion-release-mobile-pebble/focusmotion-release-mobile-pebble.iml" filepath="$PROJECT_DIR$/focusmotion-release-mobile-pebble/focusmotion-release-mobile-pebble.iml" />
     </modules>
   </component>
 </project>

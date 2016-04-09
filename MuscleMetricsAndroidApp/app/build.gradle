@@ -21,10 +21,15 @@ android {
 
 repositories {
     maven { url "https://jitpack.io" }
+    flatDir {
+        dirs 'libraries'
+        dirs 'libraries/android/sdk'
+        dirs 'libraries/data/sdk'
+    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libraries', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
@@ -34,8 +39,11 @@ dependencies {
     compile 'com.google.android.gms:play-services-wearable:8.4.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.0'
     compile 'info.hoang8f:android-segmented:1.0.6'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.getpebble:pebblekit:3.0.0'
+    debugCompile(name: 'debug/focusmotion-mobile', ext:'aar')
+    releaseCompile(name: 'debug/focusmotion-mobile', ext:'aar')
+    debugCompile(name: 'debug/focusmotion-mobile-pebble', ext:'aar')
+    releaseCompile(name: 'release/focusmotion-mobile-pebble', ext:'aar')
 }
 

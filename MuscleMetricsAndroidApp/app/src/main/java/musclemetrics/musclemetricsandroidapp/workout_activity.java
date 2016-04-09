@@ -164,7 +164,7 @@ public class workout_activity extends AppCompatActivity {
         pebble.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(workout_activity.this,
-                        pebble_activity.class);
+                        focus_motion_activity.class);
                 intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intentApp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intentApp);

@@ -4,8 +4,10 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Config;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -20,6 +22,9 @@ import com.getpebble.android.kit.util.PebbleDictionary;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
+
+import io.focusmotion.sdk.Device;
+import io.focusmotion.sdk.FocusMotion;
 
 /**
  * Created by JerunTrajko on 3/27/16.
@@ -38,7 +43,7 @@ public class pebble_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pebble);
         listView = (ListView) findViewById(R.id.list);
-
+        /*
         //Set up the bluetooth
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
@@ -55,6 +60,7 @@ public class pebble_activity extends AppCompatActivity {
         {
             getPairedDevices();
         }
+        */
     }
 
     @Override
