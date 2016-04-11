@@ -31,12 +31,16 @@ import io.focusmotion.sdk.DeviceListener;
 import io.focusmotion.sdk.DeviceOutput;
 import io.focusmotion.sdk.FocusMotion;
 import io.focusmotion.sdk.MovementAnalyzer;
+import io.focusmotion.sdk.MovementType;
+import io.focusmotion.sdk.PathType;
 import io.focusmotion.sdk.pebble.PebbleDevice;
 
 /**
  * Created by JerunTrajko on 1/15/16.
  */
 public class focus_motion_activity extends AppCompatActivity implements DeviceListener {
+
+    //public static String biceps = MovementType.BICEPCURLS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -136,7 +140,6 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
             m_movementSpinner.setAdapter(movementAdapter);
         }
         Log.d("onCreate", "onCreate End");
-
     }
 
     @Override
@@ -296,14 +299,11 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
 
     private void analyze()
     {
-        Log.d("analyze", "start");
-        Log.i(getLocalClassName(), "analyzing...");
-
         // get the data that has been sent from the device
+
         DeviceOutput data = Device.getLastConnectedDevice().getOutput();
-        Log.d("analyze", "here1");
-        //Breaks after the next line
-        MovementAnalyzer analyzer = MovementAnalyzer.createSingleMovementAnalyzer();
+        /*
+        MovementAnalyzer analyzer = MovementAnalyzer.createSingleMovementAnalyzer("bicepcurls");
         Log.d("analyze", "here2");
         analyzer.analyze(data);
         Log.d("analyze", "here3");
@@ -318,8 +318,7 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
         showResults(analyzer);
         Log.d("analyze", "here4");
         analyzer.destroy();
-
-        /*
+        */
         // which movement type?
         int movementPos = m_movementSpinner.getSelectedItemPosition();
         Log.d("analyze", Integer.toString(movementPos));
@@ -361,7 +360,6 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
         Log.d("analyze", "here4");
         analyzer.destroy();
         Log.d("analyze", "end");
-        */
     }
 
     private void showResults(MovementAnalyzer analyzer)
