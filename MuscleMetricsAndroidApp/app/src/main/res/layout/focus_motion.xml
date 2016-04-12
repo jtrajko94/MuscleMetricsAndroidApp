@@ -29,21 +29,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Analysis:"
-        android:id="@+id/analysisLabel"
-        android:layout_gravity="top"
-        android:paddingTop="20dp" />
-
-    <Spinner
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/analysis_spinner"
-        android:layout_gravity="top" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Movement:"
         android:id="@+id/movementLabel"
         android:layout_gravity="top"

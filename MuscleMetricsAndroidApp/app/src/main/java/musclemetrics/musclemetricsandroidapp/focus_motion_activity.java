@@ -3,26 +3,20 @@ package musclemetrics.musclemetricsandroidapp;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+import com.getpebble.android.kit.PebbleKit;
+import com.getpebble.android.kit.util.PebbleDictionary;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import io.focusmotion.sdk.AnalyzerResult;
 import io.focusmotion.sdk.Config;
 import io.focusmotion.sdk.ConnectionError;
@@ -31,21 +25,17 @@ import io.focusmotion.sdk.DeviceListener;
 import io.focusmotion.sdk.DeviceOutput;
 import io.focusmotion.sdk.FocusMotion;
 import io.focusmotion.sdk.MovementAnalyzer;
-import io.focusmotion.sdk.MovementType;
-import io.focusmotion.sdk.PathType;
 import io.focusmotion.sdk.pebble.PebbleDevice;
 
 /**
  * Created by JerunTrajko on 1/15/16.
  */
-public class focus_motion_activity extends AppCompatActivity implements DeviceListener {
-
-    //public static String biceps = MovementType.BICEPCURLS;
+public class focus_motion_activity extends AppCompatActivity implements DeviceListener
+{
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        Log.d("onCreate", "onCreate Start");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.focus_motion);
 
@@ -95,33 +85,6 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
         updateConnectButton();
         updateStartButton();
 
-
-        {
-            // populate spinner with analysis types
-            m_analyzerSpinner = (Spinner) findViewById(R.id.analysis_spinner);
-            String[] labels = new String[]
-                    {
-                            "Single movement",
-                            "Multiple movement"
-                    };
-            ArrayAdapter analysisAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, labels);
-            analysisAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            m_analyzerSpinner.setAdapter(analysisAdapter);
-
-            m_analyzerSpinner.setOnItemSelectedListener(
-                    new AdapterView.OnItemSelectedListener()
-                    {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
-                        {
-                            m_movementSpinner.setEnabled(pos != 1);
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {}
-                    });
-        }
-
         {
             // populate spinner with movement types
             m_movementSpinner = (Spinner) findViewById(R.id.movement_spinner);
@@ -139,13 +102,19 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
             movementAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             m_movementSpinner.setAdapter(movementAdapter);
         }
-        Log.d("onCreate", "onCreate End");
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intentApp = new Intent(focus_motion_activity.this,
+                workout_activity.class);
+        startActivity(intentApp);
+        finish();
     }
 
     @Override
     protected void onDestroy()
     {
-        Log.d("onDestroy", "onDestroy");
         FocusMotion.shutdown();
 
         super.onDestroy();
@@ -154,7 +123,6 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
     @Override
     protected void onStart()
     {
-        Log.d("onStart", "on Start");
         super.onStart();
 
         Device.onStart();
@@ -167,7 +135,6 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
     @Override
     protected void onStop()
     {
-        Log.d("onStop", "on Stop");
         Device.onStop();
 
         super.onStop();
@@ -179,7 +146,7 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
     // UI
     private Button m_startButton;
     private Button m_connectButton;
-    private Spinner m_analyzerSpinner;
+    //private Spinner m_analyzerSpinner;
     private Spinner m_movementSpinner;
     private TextView m_resultsLabel;
     private TextView m_statusLabel;
@@ -192,7 +159,6 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
 
     private void onConnectButtonPressed()
     {
-        Log.d("onConnectButtonPressed", "Start");
         if (m_device != null)
         {
             if (!m_device.isConnected())
@@ -206,12 +172,10 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
         }
 
         updateConnectButton();
-        Log.d("onConnectButtonPressed", "End");
     }
 
     private void onStartButtonPressed()
     {
-        Log.d("onStartButtonPressed", "Start");
         if (m_device != null)
         {
             if (m_device.isRecording())
@@ -223,14 +187,12 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
                 m_device.startRecording();
             }
         }
-        Log.d("onStartButtonPressed", "End");
     }
 
     ////////////////////////////////////////
 
     private void updateStatusLabel()
     {
-        Log.d("updateStatusLabel", "start");
         if (m_device != null)
         {
             m_statusLabel.setText(String.format("%s: %s", m_device.getName(), (m_device.isConnected() ? "connected" : "disconnected")));
@@ -239,12 +201,10 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
         {
             m_statusLabel.setText(R.string.no_devices);
         }
-        Log.d("updateStatusLabel", "end");
     }
 
     private void updateConnectButton()
     {
-        Log.d("updateConnectButton", "start");
         if (m_device != null)
         {
             if (m_device.isConnected())
@@ -268,12 +228,10 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
             m_connectButton.setText(R.string.connect);
             m_connectButton.setEnabled(false);
         }
-        Log.d("updateConnectButton", "end");
     }
 
     private void updateStartButton()
     {
-        Log.d("updateStartButton", "start");
         if (m_device != null && m_device.isConnected())
         {
             m_startButton.setEnabled(true);
@@ -291,7 +249,6 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
         {
             m_startButton.setEnabled(false);
         }
-        Log.d("updateStartButton", "end");
     }
 
     ////////////////////////////////////////
@@ -299,72 +256,24 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
 
     private void analyze()
     {
-        // get the data that has been sent from the device
-
         DeviceOutput data = Device.getLastConnectedDevice().getOutput();
-        /*
-        MovementAnalyzer analyzer = MovementAnalyzer.createSingleMovementAnalyzer("bicepcurls");
-        Log.d("analyze", "here2");
-        analyzer.analyze(data);
-        Log.d("analyze", "here3");
-        AnalyzerResult result = analyzer.getResult(0);
-        Log.d("analyze", "here31");
-        if(result.repCount > 0)
-        {
-            Log.d("analyze", "here32");
-            showResults(analyzer);
-        }
-        Log.d("analyze", "here34");
-        showResults(analyzer);
-        Log.d("analyze", "here4");
-        analyzer.destroy();
-        */
+
         // which movement type?
         int movementPos = m_movementSpinner.getSelectedItemPosition();
-        Log.d("analyze", Integer.toString(movementPos));
         String movementType = null;
         if (movementPos > 0)
         {
-            Log.d("analyze", "movement type set");
             movementType = FocusMotion.getMovementType(movementPos-1);
         }
-
-        Log.d("analyze", "here1");
-        // which analyzer?
-        //analyzerPos is null always
-        int analyzerPos = m_analyzerSpinner.getSelectedItemPosition();
-        Log.d("analyze", "here11");
         MovementAnalyzer analyzer = null;
-        Log.d("analyze", "here12");
-        //breaks here
-        switch (analyzerPos)
-        {
-            case 0:
-                Log.d("analyze", "here13");
-                analyzer = MovementAnalyzer.createSingleMovementAnalyzer(movementType);
-                Log.d("analyze", "here131");
-                break;
-
-            case 1:
-                Log.d("analyze", "here14");
-                analyzer = MovementAnalyzer.createMultipleMovementAnalyzer();
-                break;
-        }
-
-        Log.d("analyze", "here2");
-
+        analyzer = MovementAnalyzer.createSingleMovementAnalyzer(movementType);
         analyzer.analyze(data);
-
-        Log.d("analyze", "here3");
         showResults(analyzer);
-        Log.d("analyze", "here4");
         analyzer.destroy();
-        Log.d("analyze", "end");
     }
 
     private void showResults(MovementAnalyzer analyzer)
     {
-        Log.d("showResults", "start");
         if (analyzer.getNumResults() > 0)
         {
             String text = "";
@@ -392,6 +301,7 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
                             result.internalVariation,
                             result.referenceVariation,
                             result.referenceRepTime);
+                    sendPebbleInfo(result.repCount, FocusMotion.getMovementDisplayName(result.movementType));
                 }
                 text += "\n";
             }
@@ -401,7 +311,6 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
         {
             m_resultsLabel.setText(R.string.no_results);
         }
-        Log.d("showResults", "end");
     }
 
 
@@ -411,7 +320,6 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
     @Override
     public void onAvailableChanged(Device device, boolean available)
     {
-        Log.d("onAvailableChanged", "start");
         if (available && m_device == null)
         {
             // didn't have a device before; set this to the current one
@@ -426,13 +334,11 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
 
         updateConnectButton();
         updateStatusLabel();
-        Log.d("onAvailableChanged", "end");
     }
 
     @Override
     public void onConnectedChanged(Device device, boolean connected)
     {
-        Log.d("onConnectedChanged", "start");
         if (!connected)
         {
             List<Device> availableDevices = Device.getAvailableDevices();
@@ -456,13 +362,11 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
         updateConnectButton();
         updateStartButton();
         updateStatusLabel();
-        Log.d("onConnectedChanged", "end");
     }
 
     @Override
     public void onRecordingChanged(Device device, boolean recording)
     {
-        Log.d("onRecordingChanged", "start");
         updateStartButton();
         if (!recording)
         {
@@ -472,19 +376,17 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
         {
             m_resultsLabel.setText("");
         }
-        Log.d("onRecordingChanged", "end");
     }
 
     @Override
     public void onDataReceived(Device device)
     {
-        Log.d("onDataReceived", "start");
+        //Data has been received, don't need to do anything
     }
 
     @Override
     public void onConnectionFailed(Device device, ConnectionError error, String message)
     {
-        Log.d("onConnectionFailed", "start");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message);
         builder.setTitle("Connection failed!");
@@ -501,6 +403,25 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
 
         updateConnectButton();
         updateStatusLabel();
-        Log.d("onConnectionFailed", "end");
+    }
+
+    //Send data to the pebble
+    public void sendPebbleInfo(int rep, String workout)
+    {
+        // Create a new dictionary
+        PebbleDictionary dict = new PebbleDictionary();
+
+        // The key representing a contact name is being transmitted
+        final int repKey = 0;
+        final int workoutKey = 1;
+
+        // Add data to the dictionary
+        dict.addString(workoutKey, workout);
+        dict.addInt32(repKey, rep);
+
+        final UUID appUuid = UUID.fromString("4eb9f670-e798-4ce5-918f-db6c38b23846");
+
+        // Send the dictionary
+        PebbleKit.sendDataToPebble(getApplicationContext(), appUuid, dict);
     }
 }
