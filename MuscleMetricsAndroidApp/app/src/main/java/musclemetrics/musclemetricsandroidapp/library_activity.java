@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 /**
  * Created by JerunTrajko on 1/15/16.
@@ -65,7 +66,7 @@ public class library_activity extends AppCompatActivity {
     //Set Bottom Toolbar
     private void setBottomToolbar()
     {
-        final Button work = (Button) findViewById(R.id.workoutButton);
+        final ImageButton work = (ImageButton) findViewById(R.id.workoutButton);
         work.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(library_activity.this,
@@ -76,7 +77,7 @@ public class library_activity extends AppCompatActivity {
             }
         });
 
-        final Button cal = (Button) findViewById(R.id.calendarButton);
+        final ImageButton cal = (ImageButton) findViewById(R.id.calendarButton);
         cal.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(library_activity.this,
@@ -87,7 +88,7 @@ public class library_activity extends AppCompatActivity {
             }
         });
 
-        final Button pro = (Button) findViewById(R.id.progressButton);
+        final ImageButton pro = (ImageButton) findViewById(R.id.progressButton);
         pro.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -99,7 +100,7 @@ public class library_activity extends AppCompatActivity {
             }
         });
 
-        final Button prof = (Button) findViewById(R.id.profileButton);
+        final ImageButton prof = (ImageButton) findViewById(R.id.profileButton);
         prof.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(library_activity.this,

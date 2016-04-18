@@ -37,51 +37,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="musclemetrics.musclemetricsandroidapp.workout_activity">
-
-    <LinearLayout android:id="@+id/linearLayout4"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="bottom"
-        android:gravity="bottom"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        xmlns:android="http://schemas.android.com/apk/res/android">
-        <Button android:text="Workout"
-            android:layout_height="wrap_content"
-            android:id="@+id/workoutButton"
-            android:background="#fff"
-            android:layout_width="0dp"
-            android:layout_weight=".5" />
-        <Button android:text="Library"
-            android:layout_height="wrap_content"
-            android:id="@+id/libraryButton"
-            android:layout_width="0dp"
-            android:layout_weight=".5" />
-        <Button android:text="Calendar"
-            android:layout_height="wrap_content"
-            android:id="@+id/calendarButton"
-            android:layout_width="0dp"
-            android:layout_weight=".5" />
-        <Button android:text="Progress"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressButton"
-            android:layout_width="0dp"
-            android:layout_weight=".5" />
-        <Button android:text="Profile"
-            android:layout_height="wrap_content"
-            android:id="@+id/profileButton"
-            android:layout_width="0dp"
-            android:layout_weight=".5" />
-    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -104,8 +62,9 @@
         android:layout_alignRight="@+id/textView14"
         android:layout_alignEnd="@+id/textView14"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/textView14" />
+        android:scaleType="fitXY"
+        android:background="@drawable/biceps_curl_with_dumbbell_1"
+        android:layout_above="@+id/relativeLayout2" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -168,7 +127,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/textView18"
-        android:layout_above="@+id/linearLayout4"
+        android:layout_above="@+id/bottomToolbar"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
@@ -179,6 +138,62 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/bottomToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#d4d4d4"
+        android:minHeight="?attr/actionBarSize"
+        app:theme="@style/Base.Theme.AppCompat.CompactMenu">
+
+        <LinearLayout android:id="@+id/linearLayout4"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:weightSum="2.5"
+            android:gravity="bottom"
+            android:layout_width="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android">
+            <ImageButton
+                android:layout_height="60dp"
+                android:id="@+id/workoutButton"
+                android:background="@drawable/workout_blue"
+                android:clickable="true"
+                android:layout_width="0dp"
+                android:layout_weight=".5" />
+            <ImageButton
+                android:layout_height="60dp"
+                android:id="@+id/libraryButton"
+                android:background="@drawable/library_black"
+                android:clickable="true"
+                android:layout_width="0dp"
+                android:layout_weight=".5" />
+            <ImageButton
+                android:layout_height="60dp"
+                android:id="@+id/calendarButton"
+                android:background="@drawable/calendar_black"
+                android:clickable="true"
+                android:layout_width="0dp"
+                android:layout_weight=".5" />
+            <ImageButton
+                android:layout_height="60dp"
+                android:id="@+id/progressButton"
+                android:background="@drawable/progress_black"
+                android:clickable="true"
+                android:layout_width="0dp"
+                android:layout_weight=".5" />
+            <ImageButton
+                android:layout_height="60dp"
+                android:id="@+id/profileButton"
+                android:layout_width="0dp"
+                android:background="@drawable/profile_black"
+                android:clickable="true"
+                android:layout_weight=".5" />
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
         android:orientation="vertical"
@@ -192,7 +207,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/textView18"
-        android:layout_alignEnd="@+id/textView18">
+        android:layout_alignEnd="@+id/textView18"
+        android:id="@+id/relativeLayout2">
 
         <ProgressBar
             android:layout_centerHorizontal="true"

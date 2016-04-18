@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -137,7 +138,7 @@ public class progress_activity extends AppCompatActivity {
     //set bottom toolbar
     private void setBottomToolbar()
     {
-        final Button work = (Button) findViewById(R.id.workoutButton);
+        final ImageButton work = (ImageButton) findViewById(R.id.workoutButton);
         work.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(progress_activity.this,
@@ -148,7 +149,7 @@ public class progress_activity extends AppCompatActivity {
             }
         });
 
-        final Button lib = (Button) findViewById(R.id.libraryButton);
+        final ImageButton lib = (ImageButton) findViewById(R.id.libraryButton);
         lib.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(progress_activity.this,
@@ -159,7 +160,7 @@ public class progress_activity extends AppCompatActivity {
             }
         });
 
-        final Button cal = (Button) findViewById(R.id.calendarButton);
+        final ImageButton cal = (ImageButton) findViewById(R.id.calendarButton);
         cal.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(progress_activity.this,
@@ -170,7 +171,7 @@ public class progress_activity extends AppCompatActivity {
             }
         });
 
-        final Button prof = (Button) findViewById(R.id.profileButton);
+        final ImageButton prof = (ImageButton) findViewById(R.id.profileButton);
         prof.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(progress_activity.this,

@@ -2,6 +2,7 @@ package musclemetrics.musclemetricsandroidapp;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.ImageFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -111,7 +113,7 @@ public class workout_activity extends AppCompatActivity {
 
     private void setBottomToolbar()
     {
-        final Button lib = (Button) findViewById(R.id.libraryButton);
+        final ImageButton lib = (ImageButton) findViewById(R.id.libraryButton);
         lib.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(workout_activity.this,
@@ -123,7 +125,7 @@ public class workout_activity extends AppCompatActivity {
             }
         });
 
-        final Button cal = (Button) findViewById(R.id.calendarButton);
+        final ImageButton cal = (ImageButton) findViewById(R.id.calendarButton);
         cal.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(workout_activity.this,
@@ -135,7 +137,7 @@ public class workout_activity extends AppCompatActivity {
             }
         });
 
-        final Button pro = (Button) findViewById(R.id.progressButton);
+        final ImageButton pro = (ImageButton) findViewById(R.id.progressButton);
         pro.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(workout_activity.this,
@@ -147,7 +149,7 @@ public class workout_activity extends AppCompatActivity {
             }
         });
 
-        final Button prof = (Button) findViewById(R.id.profileButton);
+        final ImageButton prof = (ImageButton) findViewById(R.id.profileButton);
         prof.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(workout_activity.this,

@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -166,7 +167,7 @@ public class profile_activity extends AppCompatActivity
     //set navigation toolbar at the bottom
     private void setBottomToolbar()
     {
-        final Button work = (Button) findViewById(R.id.workoutButton);
+        final ImageButton work = (ImageButton) findViewById(R.id.workoutButton);
         work.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(profile_activity.this,
@@ -177,7 +178,7 @@ public class profile_activity extends AppCompatActivity
             }
         });
 
-        final Button lib = (Button) findViewById(R.id.libraryButton);
+        final ImageButton lib = (ImageButton) findViewById(R.id.libraryButton);
         lib.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(profile_activity.this,
@@ -188,7 +189,7 @@ public class profile_activity extends AppCompatActivity
             }
         });
 
-        final Button cal = (Button) findViewById(R.id.calendarButton);
+        final ImageButton cal = (ImageButton) findViewById(R.id.calendarButton);
         cal.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(profile_activity.this,
@@ -199,7 +200,7 @@ public class profile_activity extends AppCompatActivity
             }
         });
 
-        final Button prog = (Button) findViewById(R.id.progressButton);
+        final ImageButton prog = (ImageButton) findViewById(R.id.progressButton);
         prog.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(profile_activity.this,
