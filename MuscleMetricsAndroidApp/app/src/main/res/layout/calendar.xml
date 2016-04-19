@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            android:titleTextColor="@color/colorAccent"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
 
@@ -27,7 +28,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/activity_vertical_margin"
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="musclemetrics.musclemetricsandroidapp.calendar_activity">
@@ -92,6 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:paddingTop="150dp"
             android:text=""
             android:id="@+id/textView3"
             android:layout_centerVertical="true"
@@ -103,22 +104,23 @@
             android:layout_height="wrap_content"
             android:id="@+id/workoutList"
             android:dividerHeight="5dp"
-            android:layout_alignTop="@+id/textView3"
-            android:textSize="21sp"
+            android:textSize="12sp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_above="@+id/bottomToolbar" />
+            android:layout_above="@+id/bottomToolbar"
+            android:layout_below="@+id/textView3" />
 
         <CalendarView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/calendar"
+            android:nestedScrollingEnabled="true"
             android:layout_alignParentTop="true"
-            android:layout_above="@+id/textView3"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/textView3" />
 
 
     </RelativeLayout>

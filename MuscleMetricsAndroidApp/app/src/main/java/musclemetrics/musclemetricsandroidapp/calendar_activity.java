@@ -58,7 +58,8 @@ public class calendar_activity extends AppCompatActivity {
         calendar.setShowWeekNumber(false);
         // sets the first day of week according to Calendar.
         // here we set Monday as the first day of the Calendar
-        calendar.setFirstDayOfWeek(2);
+        //calendar.setFirstDayOfWeek(2);
+        calendar.animate();
         //The background color for the selected week.
         //calendar.setSelectedWeekBackgroundColor("#");
         //sets the color for the dates of an unfocused month.

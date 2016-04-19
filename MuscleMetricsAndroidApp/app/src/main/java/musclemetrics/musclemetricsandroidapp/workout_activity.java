@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -35,7 +36,11 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-public class workout_activity extends AppCompatActivity {
+import io.focusmotion.sdk.ConnectionError;
+import io.focusmotion.sdk.Device;
+import io.focusmotion.sdk.DeviceListener;
+
+public class workout_activity extends AppCompatActivity implements DeviceListener {
 
     LineChart chart;
     ArrayList<String> xVals = new ArrayList<String>();
@@ -53,6 +58,8 @@ public class workout_activity extends AppCompatActivity {
         overridePendingTransition(0, 0);
         setContentView(R.layout.full_toolbar_work);
         System.out.println("Creating Workout View -----------------");
+        String PACKAGE_NAME = getApplicationContext().getPackageName();
+        System.out.println(PACKAGE_NAME);
 
         //Setting Bottom Toolbar
         setBottomToolbar();
@@ -68,12 +75,8 @@ public class workout_activity extends AppCompatActivity {
 
         setChart();
 
-        setBenchPress();
-        setSquat();
-
-        //setDeadlift();
-        //setPress();
-        //setRow();
+        //Populate the chart with info
+        setExcercise();
 
         chart.invalidate(); // refresh
 
@@ -162,7 +165,7 @@ public class workout_activity extends AppCompatActivity {
         });
 
 
-        final Button pebble = (Button) findViewById(R.id.button3);
+        final ImageButton pebble = (ImageButton) findViewById(R.id.button3);
         pebble.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(workout_activity.this,
@@ -179,6 +182,7 @@ public class workout_activity extends AppCompatActivity {
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Workout");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
     }
@@ -186,12 +190,15 @@ public class workout_activity extends AppCompatActivity {
     private void setChart()
     {
         chart = (LineChart) findViewById(R.id.chart);
-
+        chart.setDescription("One Rep Maxes with Time");
+        chart.animateX(5000);
+        chart.animateY(5000);
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextSize(12f);
-        xAxis.setTextColor(Color.RED);
+        xAxis.setTextColor(Color.argb(255, 12, 194, 247));
         xAxis.setDrawAxisLine(true);
+        xAxis.setLabelsToSkip(0);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawLabels(true);
 
@@ -216,41 +223,46 @@ public class workout_activity extends AppCompatActivity {
         l.setYEntrySpace(5f); // set the space between the legend entries on the y-axis
 
         // set custom labels and colors
-        l.setCustom(ColorTemplate.VORDIPLOM_COLORS, new String[] { "Bench", "Squat", "Deadlift", "Press", "Row" });
+        int[] color = new int[1];
+        color[0] = Color.argb(255, 12, 194, 247);
+        String excercise = "Bicep Curls with Dumbbell";
+        String [] moves = new String[1];
+        moves[0] = excercise;
+        l.setCustom(color, moves);
     }
 
-    private void setBenchPress()
+    private void setExcercise()
     {
-        ArrayList<Entry> benchPoints = new ArrayList<Entry>();
+        ArrayList<Entry> excercisePoints = new ArrayList<Entry>();
         ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
 
-        Entry c1e1 = new Entry(100.000f, 0); // 0 == quarter 1
-        benchPoints.add(c1e1);
-        Entry c1e2 = new Entry(110.000f, 1); // 1 == quarter 2 ...
-        benchPoints.add(c1e2);
-        Entry c1e3 = new Entry(120.000f, 2); // 0 == quarter 1
-        benchPoints.add(c1e3);
-        Entry c1e4 = new Entry(130.000f, 3); // 1 == quarter 2 ...
-        benchPoints.add(c1e4);
-        Entry c1e5 = new Entry(135.000f, 4); // 0 == quarter 1
-        benchPoints.add(c1e5);
-        Entry c1e6 = new Entry(140.000f, 5); // 1 == quarter 2 ...
-        benchPoints.add(c1e6);
-        Entry c1e7 = new Entry(140.000f, 6); // 0 == quarter 1
-        benchPoints.add(c1e7);
-        Entry c1e8 = new Entry(143.000f, 7); // 1 == quarter 2 ...
-        benchPoints.add(c1e8);
-        Entry c1e9 = new Entry(145.000f, 8); // 0 == quarter 1
-        benchPoints.add(c1e9);
-        Entry c1e10 = new Entry(150.000f, 9); // 1 == quarter 2 ...
-        benchPoints.add(c1e10);
-        Entry c1e11 = new Entry(150.000f, 10); // 0 == quarter 1
-        benchPoints.add(c1e11);
-        Entry c1e12 = new Entry(155.000f, 11); // 1 == quarter 2 ...
-        benchPoints.add(c1e12);
+        Entry c1e1 = new Entry(30.000f, 0); // 0 == quarter 1
+        excercisePoints.add(c1e1);
+        Entry c1e2 = new Entry(40.000f, 1); // 1 == quarter 2 ...
+        excercisePoints.add(c1e2);
+        Entry c1e3 = new Entry(50.000f, 2);
+        excercisePoints.add(c1e3);
+        Entry c1e4 = new Entry(50.000f, 3);
+        excercisePoints.add(c1e4);
+        Entry c1e5 = new Entry(52.000f, 4);
+        excercisePoints.add(c1e5);
+        Entry c1e6 = new Entry(55.000f, 5);
+        excercisePoints.add(c1e6);
+        Entry c1e7 = new Entry(60.000f, 6);
+        excercisePoints.add(c1e7);
+        Entry c1e8 = new Entry(62.000f, 7);
+        excercisePoints.add(c1e8);
+        Entry c1e9 = new Entry(63.000f, 8);
+        excercisePoints.add(c1e9);
+        Entry c1e10 = new Entry(66.000f, 9);
+        excercisePoints.add(c1e10);
+        Entry c1e11 = new Entry(70.000f, 10);
+        excercisePoints.add(c1e11);
+        Entry c1e12 = new Entry(75.000f, 11);
+        excercisePoints.add(c1e12);
         // and so on ...
 
-        LineDataSet setComp1 = new LineDataSet(benchPoints, "Bench");
+        LineDataSet setComp1 = new LineDataSet(excercisePoints, "Excercise");
         setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
@@ -259,174 +271,6 @@ public class workout_activity extends AppCompatActivity {
         LineData data = new LineData(xVals, dataSets);
         chart.setData(data);
         //chart.invalidate(); // refresh
-    }
-
-    private void setSquat()
-    {
-        ArrayList<Entry> benchPoints = new ArrayList<Entry>();
-        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
-
-        Entry c1e1 = new Entry(100.000f, 0); // 0 == quarter 1
-        benchPoints.add(c1e1);
-        Entry c1e2 = new Entry(130.000f, 1); // 1 == quarter 2 ...
-        benchPoints.add(c1e2);
-        Entry c1e3 = new Entry(150.000f, 2); // 0 == quarter 1
-        benchPoints.add(c1e3);
-        Entry c1e4 = new Entry(160.000f, 3); // 1 == quarter 2 ...
-        benchPoints.add(c1e4);
-        Entry c1e5 = new Entry(160.000f, 4); // 0 == quarter 1
-        benchPoints.add(c1e5);
-        Entry c1e6 = new Entry(180.000f, 5); // 1 == quarter 2 ...
-        benchPoints.add(c1e6);
-        Entry c1e7 = new Entry(190.000f, 6); // 0 == quarter 1
-        benchPoints.add(c1e7);
-        Entry c1e8 = new Entry(195.000f, 7); // 1 == quarter 2 ...
-        benchPoints.add(c1e8);
-        Entry c1e9 = new Entry(200.000f, 8); // 0 == quarter 1
-        benchPoints.add(c1e9);
-        Entry c1e10 = new Entry(230.000f, 9); // 1 == quarter 2 ...
-        benchPoints.add(c1e10);
-        Entry c1e11 = new Entry(250.000f, 10); // 0 == quarter 1
-        benchPoints.add(c1e11);
-        Entry c1e12 = new Entry(255.000f, 11); // 1 == quarter 2 ...
-        benchPoints.add(c1e12);
-        // and so on ...
-
-        LineDataSet setComp1 = new LineDataSet(benchPoints, "Squat");
-        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-        dataSets.add(setComp1);
-
-        LineData data = new LineData(xVals, dataSets);
-        chart.setData(data);
-        //chart.invalidate(); // refresh
-    }
-
-    private void setDeadlift()
-    {
-        ArrayList<Entry> benchPoints = new ArrayList<Entry>();
-        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
-
-        Entry c1e1 = new Entry(100.000f, 0); // 0 == quarter 1
-        benchPoints.add(c1e1);
-        Entry c1e2 = new Entry(110.000f, 1); // 1 == quarter 2 ...
-        benchPoints.add(c1e2);
-        Entry c1e3 = new Entry(120.000f, 2); // 0 == quarter 1
-        benchPoints.add(c1e3);
-        Entry c1e4 = new Entry(130.000f, 3); // 1 == quarter 2 ...
-        benchPoints.add(c1e4);
-        Entry c1e5 = new Entry(135.000f, 4); // 0 == quarter 1
-        benchPoints.add(c1e5);
-        Entry c1e6 = new Entry(140.000f, 5); // 1 == quarter 2 ...
-        benchPoints.add(c1e6);
-        Entry c1e7 = new Entry(140.000f, 6); // 0 == quarter 1
-        benchPoints.add(c1e7);
-        Entry c1e8 = new Entry(143.000f, 7); // 1 == quarter 2 ...
-        benchPoints.add(c1e8);
-        Entry c1e9 = new Entry(145.000f, 8); // 0 == quarter 1
-        benchPoints.add(c1e9);
-        Entry c1e10 = new Entry(150.000f, 9); // 1 == quarter 2 ...
-        benchPoints.add(c1e10);
-        Entry c1e11 = new Entry(150.000f, 10); // 0 == quarter 1
-        benchPoints.add(c1e11);
-        Entry c1e12 = new Entry(250.000f, 11); // 1 == quarter 2 ...
-        benchPoints.add(c1e12);
-        // and so on ...
-
-        LineDataSet setComp1 = new LineDataSet(benchPoints, "Bench");
-        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-        dataSets.add(setComp1);
-
-        LineData data = new LineData(xVals, dataSets);
-        chart.setData(data);
-        chart.invalidate(); // refresh
-    }
-
-    private void setRow()
-    {
-        ArrayList<Entry> benchPoints = new ArrayList<Entry>();
-        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
-
-        Entry c1e1 = new Entry(100.000f, 0); // 0 == quarter 1
-        benchPoints.add(c1e1);
-        Entry c1e2 = new Entry(110.000f, 1); // 1 == quarter 2 ...
-        benchPoints.add(c1e2);
-        Entry c1e3 = new Entry(120.000f, 2); // 0 == quarter 1
-        benchPoints.add(c1e3);
-        Entry c1e4 = new Entry(130.000f, 3); // 1 == quarter 2 ...
-        benchPoints.add(c1e4);
-        Entry c1e5 = new Entry(135.000f, 4); // 0 == quarter 1
-        benchPoints.add(c1e5);
-        Entry c1e6 = new Entry(140.000f, 5); // 1 == quarter 2 ...
-        benchPoints.add(c1e6);
-        Entry c1e7 = new Entry(140.000f, 6); // 0 == quarter 1
-        benchPoints.add(c1e7);
-        Entry c1e8 = new Entry(143.000f, 7); // 1 == quarter 2 ...
-        benchPoints.add(c1e8);
-        Entry c1e9 = new Entry(145.000f, 8); // 0 == quarter 1
-        benchPoints.add(c1e9);
-        Entry c1e10 = new Entry(150.000f, 9); // 1 == quarter 2 ...
-        benchPoints.add(c1e10);
-        Entry c1e11 = new Entry(150.000f, 10); // 0 == quarter 1
-        benchPoints.add(c1e11);
-        Entry c1e12 = new Entry(250.000f, 11); // 1 == quarter 2 ...
-        benchPoints.add(c1e12);
-        // and so on ...
-
-        LineDataSet setComp1 = new LineDataSet(benchPoints, "Bench");
-        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-        dataSets.add(setComp1);
-
-        LineData data = new LineData(xVals, dataSets);
-        chart.setData(data);
-        chart.invalidate(); // refresh
-    }
-
-    private void setPress()
-    {
-        ArrayList<Entry> benchPoints = new ArrayList<Entry>();
-        ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
-
-        Entry c1e1 = new Entry(100.000f, 0); // 0 == quarter 1
-        benchPoints.add(c1e1);
-        Entry c1e2 = new Entry(110.000f, 1); // 1 == quarter 2 ...
-        benchPoints.add(c1e2);
-        Entry c1e3 = new Entry(120.000f, 2); // 0 == quarter 1
-        benchPoints.add(c1e3);
-        Entry c1e4 = new Entry(130.000f, 3); // 1 == quarter 2 ...
-        benchPoints.add(c1e4);
-        Entry c1e5 = new Entry(135.000f, 4); // 0 == quarter 1
-        benchPoints.add(c1e5);
-        Entry c1e6 = new Entry(140.000f, 5); // 1 == quarter 2 ...
-        benchPoints.add(c1e6);
-        Entry c1e7 = new Entry(140.000f, 6); // 0 == quarter 1
-        benchPoints.add(c1e7);
-        Entry c1e8 = new Entry(143.000f, 7); // 1 == quarter 2 ...
-        benchPoints.add(c1e8);
-        Entry c1e9 = new Entry(145.000f, 8); // 0 == quarter 1
-        benchPoints.add(c1e9);
-        Entry c1e10 = new Entry(150.000f, 9); // 1 == quarter 2 ...
-        benchPoints.add(c1e10);
-        Entry c1e11 = new Entry(150.000f, 10); // 0 == quarter 1
-        benchPoints.add(c1e11);
-        Entry c1e12 = new Entry(250.000f, 11); // 1 == quarter 2 ...
-        benchPoints.add(c1e12);
-        // and so on ...
-
-        LineDataSet setComp1 = new LineDataSet(benchPoints, "Bench");
-        setComp1.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
-        dataSets.add(setComp1);
-
-        LineData data = new LineData(xVals, dataSets);
-        chart.setData(data);
-        chart.invalidate(); // refresh
     }
 
     private void setProgressBar()
@@ -458,8 +302,8 @@ public class workout_activity extends AppCompatActivity {
     private void setTopSpinner()
     {
         dropdown = (Spinner)findViewById(R.id.spinner_nav);
-        String[] items = new String[]{"","Option 1", "Option 2", "Option 3"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        String[] items = new String[]{"Workout Info","Create a Workout", "My Workouts"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_item, items);
         dropdown.setAdapter(adapter);
 
         dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -478,5 +322,30 @@ public class workout_activity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onAvailableChanged(Device device, boolean b) {
+
+    }
+
+    @Override
+    public void onConnectedChanged(Device device, boolean b) {
+
+    }
+
+    @Override
+    public void onRecordingChanged(Device device, boolean b) {
+
+    }
+
+    @Override
+    public void onDataReceived(Device device) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(Device device, ConnectionError connectionError, String s) {
+
     }
 }

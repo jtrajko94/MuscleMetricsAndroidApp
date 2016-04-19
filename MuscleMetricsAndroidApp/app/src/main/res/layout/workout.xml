@@ -18,14 +18,19 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:layout_gravity=""
             android:clickable="true">
-
 
 
         <Spinner
             android:id="@+id/spinner_nav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor = "@color/colorAccent"
+            android:labelFor="@string/Workout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overlapAnchor="false"
+            android:popupBackground="#d4d4d4"
+            android:spinnerMode="dropdown"/>
 
         </android.support.v7.widget.Toolbar>
 
@@ -70,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Five x Five 5-5-5-5-5"
+        android:text="Standard 10-10-10"
         android:id="@+id/textView15"
         android:layout_alignBottom="@+id/imageButton2"
         android:layout_toRightOf="@+id/imageButton2"
@@ -81,7 +86,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Bench Press Dumbbell"
+        android:text="Bicep Curls with Dumbbell"
+        android:textColor="#0CC2F7"
         android:textSize="20sp"
         android:id="@+id/textView16"
         android:layout_above="@+id/textView15"
@@ -91,7 +97,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="QuickClip Not Connected"
+        android:text="QuickClip\u2122 Not Connected"
+        android:textColor="#0CC2F7"
         android:layout_centerHorizontal="true"
         android:id="@+id/textView17"
         android:layout_above="@+id/textView16"
@@ -103,21 +110,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Quick Clip Not Connected"
-        android:layout_centerHorizontal="true"
+        android:text="Changes in One Rep Maxes (lbs) with Time"
+        android:textSize="12sp"
+        android:paddingTop="5dp"
+        android:textColor="#0CC2F7"
+        android:gravity="bottom"
         android:id="@+id/textView18"
         android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="info"
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/info"
         android:id="@+id/button3"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
         android:layout_toRightOf="@+id/textView16"
         android:layout_toEndOf="@+id/textView16"
         android:layout_alignBottom="@+id/textView15" />
@@ -126,12 +138,12 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textView18"
         android:layout_above="@+id/bottomToolbar"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView18">
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chart"
@@ -226,7 +238,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Count Number"
+            android:text="0 Reps"
             android:id="@+id/repCount"
             android:layout_alignRight="@+id/circularProgressbar"
             android:layout_alignLeft="@+id/circularProgressbar"
@@ -234,6 +246,30 @@
             android:layout_alignBottom="@+id/circularProgressbar"
             android:layout_alignTop="@+id/circularProgressbar"
             />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connect"
+            android:background="@drawable/customborder"
+            android:backgroundTint="@color/colorAccent"
+            android:id="@+id/connect"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Record"
+            android:backgroundTint="@color/colorAccent"
+            android:background="@drawable/customborder"
+            android:id="@+id/record"
+            android:layout_gravity="right"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
 
     </RelativeLayout>
