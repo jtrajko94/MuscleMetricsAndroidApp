@@ -50,6 +50,11 @@ public class excercise_video_activity extends AppCompatActivity {
     private VideoView videoView;
     private MediaController mController;
     private Uri uriYouTube;
+    String jsonText = "";
+    String vidURL = "";
+
+    String yourJsonStringUrl = "http://metricsapi-dev-2sefhf4udj.elasticbeanstalk.com/records";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +96,24 @@ public class excercise_video_activity extends AppCompatActivity {
         });
 
         new AsyncTaskParseJson().execute();
+        Log.d("here4", jsonText);
+        /*
+        String responseText = null;
+        JSONObject mainResponseObject;
+        try {
+            responseText = getResponseText(yourJsonStringUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        try {
+            mainResponseObject = new JSONObject(responseText);
+            mainResponseObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        */
+/*
         String path1="http://videocdn.bodybuilding.com/video/mp4/52000/53781m.mp4";
 
         Uri uri=Uri.parse(path1);
@@ -100,6 +122,7 @@ public class excercise_video_activity extends AppCompatActivity {
         video.setMediaController(new MediaController(this));
         video.setVideoURI(uri);
         video.start();
+        */
     }
 
     @Override
@@ -211,50 +234,69 @@ public class excercise_video_activity extends AppCompatActivity {
 
         // contacts JSONArray
         JSONArray dataJsonArr = null;
+        String tempVidURL = "";
 
         @Override
         protected void onPreExecute() {}
 
         @Override
         protected String doInBackground(String... arg0) {
+            StringBuilder response  = new StringBuilder();
 
+            URL url = null;
             try {
-
-                // instantiate our json parser
-                jsonParser jParser = new jsonParser();
-
-                // get json string from url
-                JSONObject json = jParser.getJSONFromUrl(yourJsonStringUrl);
-
-                // get the array of users
-                dataJsonArr = json.getJSONArray("Records");
-
-                // loop through all users
-                for (int i = 0; i < dataJsonArr.length(); i++) {
-
-                    JSONObject c = dataJsonArr.getJSONObject(i);
-
-                    // Storing each json item in variable
-                    String firstname = c.getString("activity_name");
-                    //String lastname = c.getString("lastname");
-                    //String username = c.getString("username");
-
-                    // show the values in our logcat
-                    Log.e(TAG, "firstname: " + firstname
-                            + ", lastname: " + firstname
-                            + ", username: " + firstname);
-
+                url = new URL(yourJsonStringUrl);
+                HttpURLConnection httpconn = (HttpURLConnection)url.openConnection();
+                if (httpconn.getResponseCode() == HttpURLConnection.HTTP_OK)
+                {
+                    BufferedReader input = new BufferedReader(new InputStreamReader(httpconn.getInputStream()),8192);
+                    String strLine = null;
+                    while ((strLine = input.readLine()) != null)
+                    {
+                        response.append(strLine);
+                    }
+                    input.close();
                 }
+            } catch (MalformedURLException e) {
+                Log.d("here", "1");
+                e.printStackTrace();
+            } catch (IOException e) {
+                Log.d("here", "2");
+                e.printStackTrace();
+            }
+            jsonText = response.toString();
+            parseJSON(jsonText);
+            return response.toString();
+        }
 
+        protected void parseJSON(String response)
+        {
+            Log.d("In Parse", response);
+            JSONArray mainResponseObject = null;
+            try {
+                mainResponseObject = new JSONArray(response);
+                JSONObject parse = mainResponseObject.getJSONObject(275);
+                //startVideo(parse.get("video").toString());
+                tempVidURL = parse.get("video").toString();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-            return null;
         }
 
         @Override
-        protected void onPostExecute(String strFromDoInBg) {}
+        protected void onPostExecute(String strFromDoInBg) {
+            Log.d("video", tempVidURL);
+            startVideo(tempVidURL);
+        }
+    }
+
+    protected void startVideo(String videoURL)
+    {
+        Uri uri=Uri.parse(videoURL);
+        VideoView video=(VideoView)findViewById(R.id.videoView);
+        video.setMediaController(new MediaController(this));
+        video.setVideoURI(uri);
+        video.start();
     }
 }
 
