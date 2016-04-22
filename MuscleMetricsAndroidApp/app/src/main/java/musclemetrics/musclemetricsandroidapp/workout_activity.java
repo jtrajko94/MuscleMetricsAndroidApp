@@ -1,17 +1,21 @@
 package musclemetrics.musclemetricsandroidapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.IntegerRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,8 +25,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.getpebble.android.kit.PebbleKit;
+import com.getpebble.android.kit.util.PebbleDictionary;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
@@ -35,10 +42,18 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
+import io.focusmotion.sdk.AnalyzerResult;
+import io.focusmotion.sdk.Config;
 import io.focusmotion.sdk.ConnectionError;
 import io.focusmotion.sdk.Device;
 import io.focusmotion.sdk.DeviceListener;
+import io.focusmotion.sdk.DeviceOutput;
+import io.focusmotion.sdk.FocusMotion;
+import io.focusmotion.sdk.MovementAnalyzer;
+import io.focusmotion.sdk.pebble.PebbleDevice;
 
 public class workout_activity extends AppCompatActivity implements DeviceListener {
 
@@ -49,7 +64,17 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
     private Toolbar toolbar;
     private ProgressBar mProgress;
     private int mProgressStatus = 0;
+    private TextView repsCompleted;
 
+    private Button m_startButton;
+    private Button m_connectButton;
+    private TextView m_statusLabel;
+    private Device m_device; // the current device
+
+
+    //Change these with every excercise
+    private String excerciseType = "bicepcurls";
+    private int numReps = 10;
 
 
     @Override
@@ -58,8 +83,8 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
         overridePendingTransition(0, 0);
         setContentView(R.layout.full_toolbar_work);
         System.out.println("Creating Workout View -----------------");
-        String PACKAGE_NAME = getApplicationContext().getPackageName();
-        System.out.println(PACKAGE_NAME);
+
+        repsCompleted = (TextView) findViewById(R.id.repText);
 
         //Setting Bottom Toolbar
         setBottomToolbar();
@@ -71,7 +96,7 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
         setTopSpinner();
 
         //Setting Circular Progress Bar
-        setProgressBar();
+        setProgressBar(0);
 
         setChart();
 
@@ -80,6 +105,73 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
 
         chart.invalidate(); // refresh
 
+        m_startButton = (Button) findViewById(R.id.record);
+        m_startButton.setOnClickListener(
+                new View.OnClickListener()
+                {
+                    public void onClick(View v)
+                    {
+                        onStartButtonPressed();
+                    }
+                } );
+        m_connectButton = (Button) findViewById(R.id.connect);
+        m_connectButton.setOnClickListener(
+                new View.OnClickListener()
+                {
+                    public void onClick(View v)
+                    {
+                        onConnectButtonPressed();
+                    }
+                } );
+        m_statusLabel = (TextView) findViewById(R.id.textView17);
+
+        Config config = new Config();
+
+        // This is your API key; keep it secret!
+        if (!FocusMotion.startup(config, "4taUjX7OKnx86EMdkJlEXjzTYhiPYk6e", this))
+        {
+            throw new Error("Could not initialize FocusMotion SDK");
+        }
+
+        // initialize general device support
+        Device.addListener(this);
+
+        // initialize Pebble support
+        // the UUID is for the "simple" Pebble app, defined in fm/src/samples/simple/pebble/appinfo.json
+        UUID uuid = UUID.fromString("4eb9f670-e798-4ce5-918f-db6c38b23846");
+        PebbleDevice.startup(this, uuid);
+
+        updateStatusLabel();
+        updateConnectButton();
+        updateStartButton();
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        FocusMotion.shutdown();
+
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+
+        Device.onStart();
+
+        updateStatusLabel();
+        updateConnectButton();
+        updateStartButton();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        Device.onStop();
+
+        super.onStop();
     }
 
     @Override
@@ -165,11 +257,11 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
         });
 
 
-        final ImageButton pebble = (ImageButton) findViewById(R.id.button3);
-        pebble.setOnClickListener(new View.OnClickListener() {
+        final ImageButton info = (ImageButton) findViewById(R.id.button3);
+        info.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intentApp = new Intent(workout_activity.this,
-                        focus_motion_activity.class);
+                        excercise_muscle_activity.class);
                 intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intentApp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intentApp);
@@ -273,17 +365,28 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
         //chart.invalidate(); // refresh
     }
 
-    private void setProgressBar()
+    private void setProgressBar(double per)
     {
+        Log.d("setting progress bar", Double.toString(per));
         mProgress = (ProgressBar) findViewById(R.id.circularProgressbar);
+        mProgressStatus = 0;
+        final double percent = per*100;
+        Log.d("setting progress bar", Double.toString(percent));
 
-        // Start lengthy operation in a background thread
+        //Start the progress bar at 0
+        mHandler.post(new Runnable() {
+            public void run() {
+                mProgress.setProgress(0);
+            }
+        });
+
+        // Start lengthy operation in a background thread to increase the slider
         new Thread(new Runnable() {
             public void run() {
-                while (mProgressStatus < 100) {
+                while (mProgressStatus < percent) {
                     mProgressStatus = mProgressStatus + 1;
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(80);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -324,28 +427,265 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
         });
     }
 
-    @Override
-    public void onAvailableChanged(Device device, boolean b) {
+    private void onConnectButtonPressed()
+    {
+        if (m_device != null)
+        {
+            if (!m_device.isConnected())
+            {
+                m_device.connect();
+            }
+            else
+            {
+                m_device.disconnect();
+            }
+        }
 
+        updateConnectButton();
+    }
+
+    private void onStartButtonPressed()
+    {
+        if (m_device != null)
+        {
+            if (m_device.isRecording())
+            {
+                m_device.stopRecording();
+            }
+            else
+            {
+                m_device.startRecording();
+            }
+        }
+    }
+
+    private void updateStatusLabel()
+    {
+        if (m_device != null)
+        {
+            m_statusLabel.setText(String.format("%s: %s", m_device.getName(), (m_device.isConnected() ? "connected" : "disconnected")));
+        }
+        else
+        {
+            m_statusLabel.setText(R.string.no_devices);
+        }
+    }
+
+    private void updateConnectButton()
+    {
+        if (m_device != null)
+        {
+            if (m_device.isConnected())
+            {
+                m_connectButton.setText(R.string.disconnect);
+                m_connectButton.setEnabled(true);
+            }
+            else if (m_device.isConnecting())
+            {
+                m_connectButton.setText(R.string.connecting);
+                m_connectButton.setEnabled(false);
+            }
+            else
+            {
+                m_connectButton.setEnabled(true);
+                m_connectButton.setText(R.string.connect);
+            }
+        }
+        else
+        {
+            m_connectButton.setText(R.string.connect);
+            m_connectButton.setEnabled(false);
+        }
+    }
+
+    private void updateStartButton()
+    {
+        if (m_device != null && m_device.isConnected())
+        {
+            m_startButton.setEnabled(true);
+
+            if (m_device.isRecording())
+            {
+                m_startButton.setText(R.string.stop_recording);
+                m_connectButton.setEnabled(false);
+            }
+            else
+            {
+                m_startButton.setText(R.string.start_recording);
+                m_connectButton.setEnabled(true);
+            }
+        }
+        else
+        {
+            m_startButton.setEnabled(false);
+        }
+    }
+
+    private void analyze()
+    {
+        DeviceOutput data = Device.getLastConnectedDevice().getOutput();
+        String movementType = excerciseType;
+        MovementAnalyzer analyzer = MovementAnalyzer.createSingleMovementAnalyzer(movementType);
+        analyzer.analyze(data);
+        showResults(analyzer);
+        analyzer.destroy();
+    }
+
+    private void showResults(MovementAnalyzer analyzer)
+    {
+        if (analyzer.getNumResults() > 0)
+        {
+            String text = "";
+            AnalyzerResult result = analyzer.getResult(0);
+            text += String.format(
+                    "%s\n" +
+                            "  %d reps\n" +
+                            "  duration %.2fs\n" +
+                            "  rep time %.2f (%.2f-%.2f)\n" +
+                            "  variation %.2f\n" +
+                            "  ref variation %.2f\n" +
+                            "  ref rep time %.2f\n",
+                    FocusMotion.getMovementDisplayName(result.movementType),
+                            result.repCount,
+                            result.duration,
+                            result.meanRepTime, result.minRepTime, result.maxRepTime,
+                            result.internalVariation,
+                            result.referenceVariation,
+                            result.referenceRepTime);
+            sendPebbleInfo(result.repCount, FocusMotion.getMovementDisplayName(result.movementType));
+            Log.d("Results:", text);
+            Toast.makeText(getBaseContext(),"Excercise Completed!",
+                    Toast.LENGTH_SHORT).show();
+            repsCompleted.setText(result.repCount + " Reps");
+            double percentCompleted = (double) result.repCount/numReps;
+            Log.d("percentCompleted", Integer.toString(result.repCount));
+            Log.d("percentCompleted", Integer.toString(numReps));
+            Log.d("percentCompleted", Double.toString(percentCompleted));
+            if(percentCompleted > 1) {
+                percentCompleted = 1;
+            }
+            setProgressBar(percentCompleted);
+
+        }
+        else
+        {
+            Log.d("Results:", "No Results Found");
+            setProgress(0);
+            repsCompleted.setText("0 Reps");
+        }
+    }
+
+
+
+    @Override
+    public void onAvailableChanged(Device device, boolean available)
+    {
+        if (available && m_device == null)
+        {
+            // didn't have a device before; set this to the current one
+            m_device = device;
+        }
+
+        if (!available && m_device == device)
+        {
+            // just lost our current device; get another one, if possible
+            m_device = Device.getAvailableDevices().get(0);
+        }
+
+        updateConnectButton();
+        updateStatusLabel();
     }
 
     @Override
-    public void onConnectedChanged(Device device, boolean b) {
+    public void onConnectedChanged(Device device, boolean connected)
+    {
+        if (!connected)
+        {
+            List<Device> availableDevices = Device.getAvailableDevices();
+            if (availableDevices.isEmpty())
+            {
+                m_device = null;
+            }
+            else
+            {
+                // choose the next device
+                int index = availableDevices.indexOf(device);
+                ++index;
+                if (index >= availableDevices.size())
+                {
+                    index = 0;
+                }
+                m_device = availableDevices.get(index);
+            }
+        }
 
+        updateConnectButton();
+        updateStartButton();
+        updateStatusLabel();
     }
 
     @Override
-    public void onRecordingChanged(Device device, boolean b) {
-
+    public void onRecordingChanged(Device device, boolean recording)
+    {
+        updateStartButton();
+        if (!recording)
+        {
+            analyze();
+        }
+        else
+        {
+            Log.d("Notice", "Cleared results");
+        }
     }
 
     @Override
-    public void onDataReceived(Device device) {
-
+    public void onDataReceived(Device device)
+    {
+        //Data has been received, don't need to do anything
     }
 
     @Override
-    public void onConnectionFailed(Device device, ConnectionError connectionError, String s) {
+    public void onConnectionFailed(Device device, ConnectionError error, String message)
+    {
+        /*
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message);
+        builder.setTitle("Connection failed!");
+        builder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        dialog.dismiss();
+                    }
+                } );
+        builder.create().show();
+        */
+        Toast.makeText(getBaseContext(),"Connection Timed Out!",
+                Toast.LENGTH_SHORT).show();
 
+        updateConnectButton();
+        updateStatusLabel();
+    }
+
+    //Send data to the pebble
+    public void sendPebbleInfo(int rep, String workout)
+    {
+        // Create a new dictionary
+        PebbleDictionary dict = new PebbleDictionary();
+
+        // The key representing a contact name is being transmitted
+        final int repKey = 0;
+        final int workoutKey = 1;
+
+        // Add data to the dictionary
+        dict.addString(workoutKey, workout);
+        dict.addInt32(repKey, rep);
+
+        final UUID appUuid = UUID.fromString("4eb9f670-e798-4ce5-918f-db6c38b23846");
+
+        // Send the dictionary
+        PebbleKit.sendDataToPebble(getApplicationContext(), appUuid, dict);
     }
 }

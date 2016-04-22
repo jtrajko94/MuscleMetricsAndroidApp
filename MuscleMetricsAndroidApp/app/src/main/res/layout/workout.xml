@@ -239,7 +239,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0 Reps"
-            android:id="@+id/repCount"
+            android:id="@+id/repText"
             android:layout_alignRight="@+id/circularProgressbar"
             android:layout_alignLeft="@+id/circularProgressbar"
             android:gravity="center"

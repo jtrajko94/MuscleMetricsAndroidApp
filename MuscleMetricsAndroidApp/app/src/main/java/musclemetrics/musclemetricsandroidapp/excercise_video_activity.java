@@ -6,11 +6,13 @@ package musclemetrics.musclemetricsandroidapp;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,21 @@ import android.widget.MediaController;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.VideoView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
+
+import org.json.JSONObject;
 
 import info.hoang8f.android.segmented.SegmentedGroup;
 
@@ -72,6 +89,8 @@ public class excercise_video_activity extends AppCompatActivity {
                 }
             }
         });
+
+        new AsyncTaskParseJson().execute();
 
         String path1="http://videocdn.bodybuilding.com/video/mp4/52000/53781m.mp4";
 
@@ -175,13 +194,67 @@ public class excercise_video_activity extends AppCompatActivity {
 
     }
 
-
     //Set Top Toolbar
     private void setTopToolbar()
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Excercise");
         setSupportActionBar(toolbar);
+    }
+
+    public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
+
+        final String TAG = "AsyncTaskParseJson.java";
+
+        // set your json string url here
+        String yourJsonStringUrl = "http://metricsapi-dev-2sefhf4udj.elasticbeanstalk.com/records";
+
+        // contacts JSONArray
+        JSONArray dataJsonArr = null;
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected String doInBackground(String... arg0) {
+
+            try {
+
+                // instantiate our json parser
+                jsonParser jParser = new jsonParser();
+
+                // get json string from url
+                JSONObject json = jParser.getJSONFromUrl(yourJsonStringUrl);
+
+                // get the array of users
+                dataJsonArr = json.getJSONArray("Records");
+
+                // loop through all users
+                for (int i = 0; i < dataJsonArr.length(); i++) {
+
+                    JSONObject c = dataJsonArr.getJSONObject(i);
+
+                    // Storing each json item in variable
+                    String firstname = c.getString("activity_name");
+                    //String lastname = c.getString("lastname");
+                    //String username = c.getString("username");
+
+                    // show the values in our logcat
+                    Log.e(TAG, "firstname: " + firstname
+                            + ", lastname: " + firstname
+                            + ", username: " + firstname);
+
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String strFromDoInBg) {}
     }
 }
 

@@ -239,10 +239,12 @@ public class focus_motion_activity extends AppCompatActivity implements DeviceLi
             if (m_device.isRecording())
             {
                 m_startButton.setText(R.string.stop_recording);
+                m_connectButton.setEnabled(false);
             }
             else
             {
                 m_startButton.setText(R.string.start_recording);
+                m_connectButton.setEnabled(true);
             }
         }
         else
