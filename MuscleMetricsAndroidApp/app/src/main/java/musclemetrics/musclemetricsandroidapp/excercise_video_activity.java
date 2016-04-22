@@ -5,6 +5,7 @@ package musclemetrics.musclemetricsandroidapp;
  */
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,7 +47,7 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 public class excercise_video_activity extends AppCompatActivity {
 
     SegmentedGroup segmentedGroup;
-
+    Toolbar toolbar;
     private VideoView videoView;
     private MediaController mController;
     private Uri uriYouTube;
@@ -96,33 +97,6 @@ public class excercise_video_activity extends AppCompatActivity {
         });
 
         new AsyncTaskParseJson().execute();
-        Log.d("here4", jsonText);
-        /*
-        String responseText = null;
-        JSONObject mainResponseObject;
-        try {
-            responseText = getResponseText(yourJsonStringUrl);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            mainResponseObject = new JSONObject(responseText);
-            mainResponseObject.toString();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        */
-/*
-        String path1="http://videocdn.bodybuilding.com/video/mp4/52000/53781m.mp4";
-
-        Uri uri=Uri.parse(path1);
-
-        VideoView video=(VideoView)findViewById(R.id.videoView);
-        video.setMediaController(new MediaController(this));
-        video.setVideoURI(uri);
-        video.start();
-        */
     }
 
     @Override
@@ -220,8 +194,9 @@ public class excercise_video_activity extends AppCompatActivity {
     //Set Top Toolbar
     private void setTopToolbar()
     {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Excercise");
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        toolbar.setTitleTextColor(Color.argb(255, 12, 194, 247));
         setSupportActionBar(toolbar);
     }
 
@@ -235,6 +210,7 @@ public class excercise_video_activity extends AppCompatActivity {
         // contacts JSONArray
         JSONArray dataJsonArr = null;
         String tempVidURL = "";
+        String tempToolName = "";
 
         @Override
         protected void onPreExecute() {}
@@ -276,8 +252,9 @@ public class excercise_video_activity extends AppCompatActivity {
             try {
                 mainResponseObject = new JSONArray(response);
                 JSONObject parse = mainResponseObject.getJSONObject(275);
-                //startVideo(parse.get("video").toString());
                 tempVidURL = parse.get("video").toString();
+                tempToolName = parse.get("activity_name").toString();
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -285,8 +262,8 @@ public class excercise_video_activity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String strFromDoInBg) {
-            Log.d("video", tempVidURL);
             startVideo(tempVidURL);
+            toolbar.setTitle(tempToolName);
         }
     }
 

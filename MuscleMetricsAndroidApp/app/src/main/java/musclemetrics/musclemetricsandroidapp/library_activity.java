@@ -111,17 +111,6 @@ public class library_activity extends AppCompatActivity {
             }
         });
 
-        final Button exc = (Button) findViewById(R.id.excButton);
-        exc.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intentApp = new Intent(library_activity.this,
-                        excercise_muscle_activity.class);
-                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intentApp);
-                finish();
-            }
-        });
-
     }
 
 

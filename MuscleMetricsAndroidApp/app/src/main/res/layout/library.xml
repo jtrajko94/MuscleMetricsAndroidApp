@@ -110,14 +110,9 @@
                 android:layout_height="fill_parent"
                 android:scaleType="fitCenter"
                 android:src="@drawable/left_shoulder"
+                android:visibility="invisible"
                 />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Excercise"
-                android:id="@+id/excButton"
-                android:layout_gravity="left|bottom" />
         </FrameLayout>
 
     </RelativeLayout>

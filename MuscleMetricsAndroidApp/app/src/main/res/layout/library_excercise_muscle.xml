@@ -14,6 +14,7 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
+            android:textColor = "@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -125,14 +126,34 @@
                 style="@style/RadioButton" />
         </info.hoang8f.android.segmented.SegmentedGroup>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="muscle"
-            android:id="@+id/textView23"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@+id/segmented2"
-            android:layout_centerHorizontal="true" />
+            android:layout_above="@+id/bottomToolbar"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <ImageView
+                android:id="@+id/image_areas"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/front"
+                />
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/left_shoulder"
+                android:visibility="invisible"
+                />
+
+        </FrameLayout>
+
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
