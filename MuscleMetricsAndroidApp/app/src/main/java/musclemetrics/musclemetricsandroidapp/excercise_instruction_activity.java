@@ -100,6 +100,8 @@ public class excercise_instruction_activity extends AppCompatActivity {
         });
 
         new AsyncTaskParseJson().execute();
+
+        setThumbnail();
     }
 
     @Override
@@ -254,23 +256,20 @@ public class excercise_instruction_activity extends AppCompatActivity {
         //Get all necessary fields
         protected void parseJSON(String response)
         {
-            JSONArray mainResponseObject = null;
+            JSONObject mainResponseObject = null;
             try {
-                mainResponseObject = new JSONArray(response);
-                JSONObject parse = mainResponseObject.getJSONObject(275);
+                mainResponseObject = new JSONObject(response);
+                JSONArray array = new JSONArray(mainResponseObject.get("Records").toString());
+                JSONObject parse = array.getJSONObject(275);
                 tempInst = parse.get("activity_instructions").toString();
-                thumbOne = parse.get("image_0").toString();
-                thumbTwo = parse.get("image_1").toString();
+                //thumbOne = parse.get("image_0").toString();
+                //thumbTwo = parse.get("image_1").toString();
                 tempToolName = parse.get("activity_name").toString();
-                InputStream in1 = new URL(thumbOne).openStream();
-                bmp1 = BitmapFactory.decodeStream(in1);
-                InputStream in2 = new URL(thumbTwo).openStream();
-                bmp2 = BitmapFactory.decodeStream(in2);
+                //InputStream in1 = new URL(thumbOne).openStream();
+                //bmp1 = BitmapFactory.decodeStream(in1);
+                //InputStream in2 = new URL(thumbTwo).openStream();
+                //bmp2 = BitmapFactory.decodeStream(in2);
             } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -280,38 +279,47 @@ public class excercise_instruction_activity extends AppCompatActivity {
         protected void onPostExecute(String strFromDoInBg) {
             instructionsText.setText(tempInst);
             toolbar.setTitle(tempToolName);
-            Thread timer = new Thread()
+        }
+    }
+
+    public void setThumbnail()
+    {
+        Thread timer = new Thread()
+        {
+            public void run()
             {
-                public void run()
-                {
-                    while(1==1) {
-                        try {
-                            sleep(2000);
-                            runOnUiThread(new Runnable() {
-                                public void run() {
-                                    if (bmp1 != null) {
+                while(1==1) {
+                    try {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                    /*if (bmp1 != null) {
                                         thumbView.setImageBitmap(bmp1);
                                         thumbView.invalidate();
                                     }
-                                }
-                            });
-                            sleep(2000);
-                            runOnUiThread(new Runnable() {
-                                public void run() {
+                                    */
+                                thumbView.setImageResource(R.drawable.biceps_curl_with_dumbbell_1);
+                            }
+                        });
+                        sleep(2000);
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                    /*
                                     if (bmp2 != null) {
                                         thumbView.setImageBitmap(bmp2);
                                         thumbView.invalidate();
                                     }
-                                }
-                            });
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                                    */
+                                thumbView.setImageResource(R.drawable.biceps_curl_with_dumbbell_2);
+                            }
+                        });
+                        sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
-            };
-            timer.start();
-        }
+            }
+        };
+        timer.start();
     }
 }
 

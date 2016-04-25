@@ -233,10 +233,11 @@ public class excercise_muscle_activity extends AppCompatActivity {
 
         protected void parseJSON(String response)
         {
-            JSONArray mainResponseObject = null;
+            JSONObject mainResponseObject = null;
             try {
-                mainResponseObject = new JSONArray(response);
-                JSONObject parse = mainResponseObject.getJSONObject(275);
+                mainResponseObject = new JSONObject(response);
+                JSONArray array = new JSONArray(mainResponseObject.get("Records").toString());
+                JSONObject parse = array.getJSONObject(275);
                 tempToolName = parse.get("activity_name").toString();
 
             } catch (JSONException e) {

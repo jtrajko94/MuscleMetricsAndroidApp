@@ -247,11 +247,11 @@ public class excercise_video_activity extends AppCompatActivity {
 
         protected void parseJSON(String response)
         {
-            Log.d("In Parse", response);
-            JSONArray mainResponseObject = null;
+            JSONObject mainResponseObject = null;
             try {
-                mainResponseObject = new JSONArray(response);
-                JSONObject parse = mainResponseObject.getJSONObject(275);
+                mainResponseObject = new JSONObject(response);
+                JSONArray array = new JSONArray(mainResponseObject.get("Records").toString());
+                JSONObject parse = array.getJSONObject(275);
                 tempVidURL = parse.get("video").toString();
                 tempToolName = parse.get("activity_name").toString();
 
