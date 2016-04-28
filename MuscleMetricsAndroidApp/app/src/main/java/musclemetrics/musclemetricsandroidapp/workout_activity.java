@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.BoolRes;
 import android.support.annotation.IntegerRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -52,9 +53,12 @@ import io.focusmotion.sdk.Device;
 import io.focusmotion.sdk.DeviceListener;
 import io.focusmotion.sdk.DeviceOutput;
 import io.focusmotion.sdk.FocusMotion;
+import io.focusmotion.sdk.FocusMotionService;
 import io.focusmotion.sdk.MovementAnalyzer;
 import io.focusmotion.sdk.pebble.PebbleDevice;
 
+//TODO: App should close when the onStop method is called (track why it doesnt)
+//TODO: Add the progress bar thread again
 public class workout_activity extends AppCompatActivity implements DeviceListener {
 
     LineChart chart;
@@ -69,7 +73,7 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
     private Button m_startButton;
     private Button m_connectButton;
     private TextView m_statusLabel;
-    private Device m_device; // the current device
+    private PebbleDevice m_device; // the current device
 
 
     //Change these with every excercise
@@ -86,9 +90,6 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
 
         repsCompleted = (TextView) findViewById(R.id.repText);
 
-        //Setting Bottom Toolbar
-        setBottomToolbar();
-
         //Setting Top Toolbar
         setTopToolbar();
 
@@ -101,7 +102,7 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
         setChart();
 
         //Populate the chart with info
-        setExcercise();
+        setExcercise(0);
 
         chart.invalidate(); // refresh
 
@@ -128,18 +129,22 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
         Config config = new Config();
 
         // This is your API key; keep it secret!
+        Log.d("initialized FM", "FM all good");
         if (!FocusMotion.startup(config, "4taUjX7OKnx86EMdkJlEXjzTYhiPYk6e", this))
         {
             throw new Error("Could not initialize FocusMotion SDK");
         }
 
         // initialize general device support
-        Device.addListener(this);
+        PebbleDevice.addListener(this);
 
         // initialize Pebble support
         // the UUID is for the "simple" Pebble app, defined in fm/src/samples/simple/pebble/appinfo.json
         UUID uuid = UUID.fromString("4eb9f670-e798-4ce5-918f-db6c38b23846");
         PebbleDevice.startup(this, uuid);
+
+        //Setting Bottom Toolbar
+        setBottomToolbar();
 
         updateStatusLabel();
         updateConnectButton();
@@ -149,7 +154,7 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
     @Override
     protected void onDestroy()
     {
-        FocusMotion.shutdown();
+        //FocusMotion.shutdown();
 
         super.onDestroy();
     }
@@ -157,9 +162,11 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
     @Override
     protected void onStart()
     {
+        Log.d("onStart", "first");
+        Log.d("IsInitialized?", Boolean.toString(FocusMotion.isInitialized()));
         super.onStart();
 
-        Device.onStart();
+        PebbleDevice.onStart();
 
         updateStatusLabel();
         updateConnectButton();
@@ -169,8 +176,9 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
     @Override
     protected void onStop()
     {
-        Device.onStop();
-
+        Log.d("onStop", "stop");
+        PebbleDevice.onStop();
+        //FocusMotion.shutdown();
         super.onStop();
     }
 
@@ -213,6 +221,14 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
             public void onClick(View v) {
                 Intent intentApp = new Intent(workout_activity.this,
                         library_activity.class);
+                m_device = (PebbleDevice)PebbleDevice.getAvailableDevices().get(0);
+                m_device.connect();
+                if (m_device != null && m_device.isConnected())
+                {
+                        Log.d("onConnect", "disconnect");
+                        m_device.disconnect();
+                        //PebbleDevice.shutdown();
+                }
                 intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intentApp);
                 finish();
@@ -301,9 +317,9 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
         yAxis.setLabelCount(6, false);
         //yAxis.setDrawLabels(false);
 
-        xVals.add("Jan"); xVals.add("Feb"); xVals.add("Mar"); xVals.add("Apr");
         xVals.add("May"); xVals.add("Jun"); xVals.add("Jul"); xVals.add("Aug");
-        xVals.add("Sept"); xVals.add("Oct"); xVals.add("Nov"); xVals.add("Dec");
+        xVals.add("Sep"); xVals.add("Oct"); xVals.add("Nov"); xVals.add("Dec");
+        xVals.add("Jan"); xVals.add("Feb"); xVals.add("March"); xVals.add("Apr");
 
         Legend l = chart.getLegend();
         l.setFormSize(10f); // set the size of the legend forms/shapes
@@ -323,34 +339,34 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
         l.setCustom(color, moves);
     }
 
-    private void setExcercise()
+    private void setExcercise(float last)
     {
         ArrayList<Entry> excercisePoints = new ArrayList<Entry>();
         ArrayList<Entry> valsComp2 = new ArrayList<Entry>();
 
-        Entry c1e1 = new Entry(30.000f, 0); // 0 == quarter 1
+        Entry c1e1 = new Entry(3.000f, 0); // 0 == quarter 1
         excercisePoints.add(c1e1);
-        Entry c1e2 = new Entry(40.000f, 1); // 1 == quarter 2 ...
+        Entry c1e2 = new Entry(5.000f, 1); // 1 == quarter 2 ...
         excercisePoints.add(c1e2);
-        Entry c1e3 = new Entry(50.000f, 2);
+        Entry c1e3 = new Entry(7.000f, 2);
         excercisePoints.add(c1e3);
-        Entry c1e4 = new Entry(50.000f, 3);
+        Entry c1e4 = new Entry(7.000f, 3);
         excercisePoints.add(c1e4);
-        Entry c1e5 = new Entry(52.000f, 4);
+        Entry c1e5 = new Entry(8.000f, 4);
         excercisePoints.add(c1e5);
-        Entry c1e6 = new Entry(55.000f, 5);
+        Entry c1e6 = new Entry(9.000f, 5);
         excercisePoints.add(c1e6);
-        Entry c1e7 = new Entry(60.000f, 6);
+        Entry c1e7 = new Entry(9.300f, 6);
         excercisePoints.add(c1e7);
-        Entry c1e8 = new Entry(62.000f, 7);
+        Entry c1e8 = new Entry(9.500f, 7);
         excercisePoints.add(c1e8);
-        Entry c1e9 = new Entry(63.000f, 8);
+        Entry c1e9 = new Entry(9.700f, 8);
         excercisePoints.add(c1e9);
-        Entry c1e10 = new Entry(66.000f, 9);
+        Entry c1e10 = new Entry(9.900f, 9);
         excercisePoints.add(c1e10);
-        Entry c1e11 = new Entry(70.000f, 10);
+        Entry c1e11 = new Entry(10.000f, 10);
         excercisePoints.add(c1e11);
-        Entry c1e12 = new Entry(75.000f, 11);
+        Entry c1e12 = new Entry(last, 11);
         excercisePoints.add(c1e12);
         // and so on ...
 
@@ -362,7 +378,7 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
 
         LineData data = new LineData(xVals, dataSets);
         chart.setData(data);
-        //chart.invalidate(); // refresh
+        chart.invalidate(); // refresh
     }
 
     private void setProgressBar(double per)
@@ -415,8 +431,8 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
             public void onItemSelected(AdapterView adapter, View v, int i, long lng) {
 
                 String selectedItem =  adapter.getItemAtPosition(i).toString();
-                Toast.makeText(getBaseContext(),selectedItem,
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getBaseContext(),selectedItem,
+                  //      Toast.LENGTH_SHORT).show();
                 //or this can be also right: selecteditem = level[i];
             }
             @Override
@@ -429,15 +445,19 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
 
     private void onConnectButtonPressed()
     {
+        Log.d("onConnect", "start");
         if (m_device != null)
         {
             if (!m_device.isConnected())
             {
+                Log.d("onConnect", "connect");
                 m_device.connect();
             }
             else
             {
+                Log.d("onConnect", "disconnect");
                 m_device.disconnect();
+                //m_device.stopRecording();
             }
         }
 
@@ -446,14 +466,17 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
 
     private void onStartButtonPressed()
     {
+        Log.d("onStart", "First");
         if (m_device != null)
         {
             if (m_device.isRecording())
             {
+                Log.d("onStart", "First if");
                 m_device.stopRecording();
             }
             else
             {
+                Log.d("onStart", "Second if");
                 m_device.startRecording();
             }
         }
@@ -473,26 +496,31 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
 
     private void updateConnectButton()
     {
+        Log.d("updateConnectButton", "first");
         if (m_device != null)
         {
             if (m_device.isConnected())
             {
+                Log.d("updateConnectButton", "1 if");
                 m_connectButton.setText(R.string.disconnect);
                 m_connectButton.setEnabled(true);
             }
             else if (m_device.isConnecting())
             {
+                Log.d("updateConnectButton", "2 if");
                 m_connectButton.setText(R.string.connecting);
                 m_connectButton.setEnabled(false);
             }
             else
             {
+                Log.d("updateConnectButton", "3 if");
                 m_connectButton.setEnabled(true);
                 m_connectButton.setText(R.string.connect);
             }
         }
         else
         {
+            Log.d("updateConnectButton", "big else");
             m_connectButton.setText(R.string.connect);
             m_connectButton.setEnabled(false);
         }
@@ -500,30 +528,36 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
 
     private void updateStartButton()
     {
+        m_device = (PebbleDevice)PebbleDevice.getAvailableDevices().get(0);
+        Log.d("updateStartButton", "first");
         if (m_device != null && m_device.isConnected())
         {
+            Log.d("updateStartButton", "if 1");
             m_startButton.setEnabled(true);
 
             if (m_device.isRecording())
             {
+                Log.d("updateStartButton", "if 2");
                 m_startButton.setText(R.string.stop_recording);
                 m_connectButton.setEnabled(false);
             }
             else
             {
+                Log.d("updateStartButton", "if 3");
                 m_startButton.setText(R.string.start_recording);
                 m_connectButton.setEnabled(true);
             }
         }
         else
         {
+            Log.d("updateStartButton", "if 4");
             m_startButton.setEnabled(false);
         }
     }
 
     private void analyze()
     {
-        DeviceOutput data = Device.getLastConnectedDevice().getOutput();
+        DeviceOutput data = PebbleDevice.getLastConnectedDevice().getOutput();
         String movementType = excerciseType;
         MovementAnalyzer analyzer = MovementAnalyzer.createSingleMovementAnalyzer(movementType);
         analyzer.analyze(data);
@@ -546,21 +580,25 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
                             "  ref variation %.2f\n" +
                             "  ref rep time %.2f\n",
                     FocusMotion.getMovementDisplayName(result.movementType),
-                            result.repCount,
-                            result.duration,
-                            result.meanRepTime, result.minRepTime, result.maxRepTime,
-                            result.internalVariation,
-                            result.referenceVariation,
-                            result.referenceRepTime);
+                    result.repCount,
+                    result.duration,
+                    result.meanRepTime, result.minRepTime, result.maxRepTime,
+                    result.internalVariation,
+                    result.referenceVariation,
+                    result.referenceRepTime);
             sendPebbleInfo(result.repCount, FocusMotion.getMovementDisplayName(result.movementType));
             Log.d("Results:", text);
             Toast.makeText(getBaseContext(),"Excercise Completed!",
                     Toast.LENGTH_SHORT).show();
             repsCompleted.setText(result.repCount + " Reps");
+            float weight = (float)10;
+            float one = (float)1;
+            float repCount = (float)result.repCount;
+            float div = repCount/(float)30;
+            float temp = one + div;
+            float oneRepMax = (weight * temp);
+            setExcercise(oneRepMax);
             double percentCompleted = (double) result.repCount/numReps;
-            Log.d("percentCompleted", Integer.toString(result.repCount));
-            Log.d("percentCompleted", Integer.toString(numReps));
-            Log.d("percentCompleted", Double.toString(percentCompleted));
             if(percentCompleted > 1) {
                 percentCompleted = 1;
             }
@@ -569,7 +607,6 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
         }
         else
         {
-            Log.d("Results:", "No Results Found");
             setProgress(0);
             repsCompleted.setText("0 Reps");
         }
@@ -580,16 +617,19 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
     @Override
     public void onAvailableChanged(Device device, boolean available)
     {
+        Log.d("on Available Changed", "start");
         if (available && m_device == null)
         {
+            Log.d("on Available Changed", "first if");
             // didn't have a device before; set this to the current one
-            m_device = device;
+            m_device = (PebbleDevice)device;
         }
 
         if (!available && m_device == device)
         {
+            Log.d("on Available Changed", "second if");
             // just lost our current device; get another one, if possible
-            m_device = Device.getAvailableDevices().get(0);
+            m_device = (PebbleDevice)Device.getAvailableDevices().get(0);
         }
 
         updateConnectButton();
@@ -599,15 +639,18 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
     @Override
     public void onConnectedChanged(Device device, boolean connected)
     {
+        Log.d("on connected changed", "start");
         if (!connected)
         {
             List<Device> availableDevices = Device.getAvailableDevices();
             if (availableDevices.isEmpty())
             {
+                Log.d("on connected changed", "first if");
                 m_device = null;
             }
             else
             {
+                Log.d("on connected changed", "second if");
                 // choose the next device
                 int index = availableDevices.indexOf(device);
                 ++index;
@@ -615,7 +658,7 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
                 {
                     index = 0;
                 }
-                m_device = availableDevices.get(index);
+                m_device = (PebbleDevice)availableDevices.get(index);
             }
         }
 
