@@ -97,15 +97,6 @@ public class MyCustomAdapterOneWorkout extends BaseAdapter implements ListAdapte
                 alert.show();
             }
         });
-        /*
-        addBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //do something
-                notifyDataSetChanged();
-            }
-        });
-        */
 
         return view;
     }

@@ -1,21 +1,48 @@
 package musclemetrics.musclemetricsandroidapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by JerunTrajko on 1/15/16.
  */
+
 public class excercise_search_activity extends AppCompatActivity {
+
+
+    String jsonText = "";
+    ListView lView;
+    Context context = this;
+    MyCustomAdapterSearchExcercises adapter;
+    ArrayList<excercise_entry> list = new ArrayList<excercise_entry>();
+    String yourJsonStringUrl = "http://metricsapi-dev-2sefhf4udj.elasticbeanstalk.com/records";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +50,21 @@ public class excercise_search_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         overridePendingTransition(0, 0);
         setContentView(R.layout.full_toolbar_excercise_search);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        lView = (ListView) findViewById(R.id.workoutList);
+        lView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+        adapter = new MyCustomAdapterSearchExcercises(list, context);
+        lView.setAdapter(adapter);
 
         //Set bottom toolbar buttons
         setBottomToolbar();
 
         //Set Top Toolbar
         setTopToolbar();
+
+        new AsyncTaskParseJson().execute();
     }
 
     @Override
@@ -116,7 +152,81 @@ public class excercise_search_activity extends AppCompatActivity {
     private void setTopToolbar()
     {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Excercise Search");
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+    }
+
+    public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
+
+        final String TAG = "AsyncTaskParseJson.java";
+
+        // set your json string url here
+        String yourJsonStringUrl = "http://metricsapi-dev-2sefhf4udj.elasticbeanstalk.com/records";
+
+        // contacts JSONArray
+        JSONArray dataJsonArr = null;
+        String tempVidURL = "";
+        String tempToolName = "";
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected String doInBackground(String... arg0) {
+            StringBuilder response  = new StringBuilder();
+
+            URL url = null;
+            try {
+                url = new URL(yourJsonStringUrl);
+                HttpURLConnection httpconn = (HttpURLConnection)url.openConnection();
+                if (httpconn.getResponseCode() == HttpURLConnection.HTTP_OK)
+                {
+                    BufferedReader input = new BufferedReader(new InputStreamReader(httpconn.getInputStream()),8192);
+                    String strLine = null;
+                    while ((strLine = input.readLine()) != null)
+                    {
+                        response.append(strLine);
+                    }
+                    input.close();
+                }
+            } catch (MalformedURLException e) {
+                Log.d("here", "1");
+                e.printStackTrace();
+            } catch (IOException e) {
+                Log.d("here", "2");
+                e.printStackTrace();
+            }
+            jsonText = response.toString();
+            parseJSON(jsonText);
+            return response.toString();
+        }
+
+        protected void parseJSON(String response)
+        {
+            JSONObject mainResponseObject = null;
+            try {
+                mainResponseObject = new JSONObject(response);
+                JSONArray array = new JSONArray(mainResponseObject.get("Records").toString());
+                Log.d("testing", "in parse function");
+                for(int i =0; i<array.length(); i++)
+                {
+                    JSONObject parse = array.getJSONObject(i);
+                    excercise_entry temp = new excercise_entry();
+                    temp.activity_name = parse.get("activity_name").toString();
+                    temp.activity_primary_muscles = parse.get("activity_primary_muscles").toString();
+                    temp.thumbnail = parse.get("image_0").toString();
+                    Log.d("test", temp.activity_name);
+                    list.add(temp);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String strFromDoInBg) {
+            adapter.notifyDataSetChanged();
+            //TODO: Fix the layout per line on the activity list, plus need to add search functionality
+        }
     }
 }
