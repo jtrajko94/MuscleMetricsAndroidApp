@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="musclemetrics.musclemetricsandroidapp.one_workout_activity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <ImageButton
+                android:layout_height="35dp"
+                android:id="@+id/addWorkout"
+                android:background="@drawable/add_button"
+                android:clickable="true"
+                android:layout_gravity = "end"
+                android:layout_width="35dp"
+                android:layout_weight=".5" />
+
+        </android.support.v7.widget.Toolbar>
+
+
+
+    </android.support.design.widget.AppBarLayout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="musclemetrics.musclemetricsandroidapp.one_workout_activity">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/bottomToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#d4d4d4"
+            android:minHeight="?attr/actionBarSize"
+            app:theme="@style/Base.Theme.AppCompat.CompactMenu">
+
+            <LinearLayout android:id="@+id/linearLayout4"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom"
+                android:weightSum="2.5"
+                android:gravity="bottom"
+                android:layout_width="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageButton
+                    android:layout_height="60dp"
+                    android:id="@+id/workoutButton"
+                    android:background="@drawable/workout_blue"
+                    android:clickable="true"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5" />
+                <ImageButton
+                    android:layout_height="60dp"
+                    android:id="@+id/libraryButton"
+                    android:background="@drawable/library_black"
+                    android:clickable="true"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5" />
+                <ImageButton
+                    android:layout_height="60dp"
+                    android:id="@+id/calendarButton"
+                    android:background="@drawable/calendar_black"
+                    android:clickable="true"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5" />
+                <ImageButton
+                    android:layout_height="60dp"
+                    android:id="@+id/progressButton"
+                    android:background="@drawable/progress_black"
+                    android:clickable="true"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5" />
+                <ImageButton
+                    android:layout_height="60dp"
+                    android:id="@+id/profileButton"
+                    android:layout_width="0dp"
+                    android:background="@drawable/profile_black"
+                    android:clickable="true"
+                    android:layout_weight=".5" />
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <ListView
+            android:id="@+id/excerciseList"
+            android:dividerHeight="5dp"
+            android:textSize="12sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/bottomToolbar"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:clickable="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

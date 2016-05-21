@@ -430,9 +430,18 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
             @Override
             public void onItemSelected(AdapterView adapter, View v, int i, long lng) {
 
-                String selectedItem =  adapter.getItemAtPosition(i).toString();
-                //Toast.makeText(getBaseContext(),selectedItem,
-                  //      Toast.LENGTH_SHORT).show();
+                //String selectedItem =  adapter.getItemAtPosition(i).toString();
+                //Toast.makeText(getBaseContext(),Integer.toString(i),
+                      //Toast.LENGTH_SHORT).show();
+                if(i == 1) //create workout
+                {
+                    Intent intentApp = new Intent(workout_activity.this,
+                            all_workouts_activity.class);
+                    intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentApp.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intentApp);
+                    finish();
+                }
                 //or this can be also right: selecteditem = level[i];
             }
             @Override
