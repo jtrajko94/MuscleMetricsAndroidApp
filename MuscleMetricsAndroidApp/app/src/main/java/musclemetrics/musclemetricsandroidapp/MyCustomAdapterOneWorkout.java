@@ -1,5 +1,6 @@
 package musclemetrics.musclemetricsandroidapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -62,9 +63,10 @@ public class MyCustomAdapterOneWorkout extends BaseAdapter implements ListAdapte
             public void onClick(View v) {
                 //TODO: pass the listItemText into the one excercise page
                 Intent intentApp = new Intent(context,
-                        one_excercise_activity.class);
+                        workout_activity.class);
                 intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(intentApp);
+                ((Activity)context).finish();
             }
         });
 

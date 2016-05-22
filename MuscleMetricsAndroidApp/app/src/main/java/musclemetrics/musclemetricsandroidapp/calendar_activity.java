@@ -53,7 +53,7 @@ public class calendar_activity extends AppCompatActivity {
     //Set the calendar settings
     private void initializeCalendar()
     {
-        calendar = (CalendarView) findViewById(R.id.calendar);
+        calendar = (CalendarView) findViewById(R.id.calendarView);
         // sets whether to show the week number.
         calendar.setShowWeekNumber(false);
         // sets the first day of week according to Calendar.

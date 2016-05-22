@@ -1,5 +1,6 @@
 package musclemetrics.musclemetricsandroidapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -73,6 +74,7 @@ public class MyCustomAdapterSearchExcercises extends BaseAdapter implements List
                 Intent intentApp = new Intent(context,
                         one_excercise_activity.class);
                 context.startActivity(intentApp);
+                ((Activity)context).finish();
             }
         });
 

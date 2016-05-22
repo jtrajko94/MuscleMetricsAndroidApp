@@ -113,7 +113,7 @@
         <CalendarView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/calendar"
+            android:id="@+id/calendarView"
             android:nestedScrollingEnabled="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"

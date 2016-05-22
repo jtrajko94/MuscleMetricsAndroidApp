@@ -184,12 +184,10 @@ public class workout_activity extends AppCompatActivity implements DeviceListene
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        Intent intentApp = new Intent(workout_activity.this,
+                one_workout_activity.class);
+        startActivity(intentApp);
+        finish();
     }
 
     @Override

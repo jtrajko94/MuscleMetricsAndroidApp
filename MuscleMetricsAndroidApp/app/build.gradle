@@ -39,8 +39,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-ads:8.4.0'
     compile 'com.google.android.gms:play-services-wearable:8.4.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.0'
-    compile 'info.hoang8f:android-segmented:1.0.6'
     compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'info.hoang8f:android-segmented:1.0.6'
     compile 'com.getpebble:pebblekit:3.0.0'
     debugCompile(name: 'debug/focusmotion-mobile', ext:'aar')
     releaseCompile(name: 'debug/focusmotion-mobile', ext:'aar')

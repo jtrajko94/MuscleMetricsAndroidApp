@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -41,6 +42,8 @@ public class excercise_search_activity extends AppCompatActivity {
     ListView lView;
     Context context = this;
     MyCustomAdapterSearchExcercises adapter;
+    ImageButton search;
+    EditText editName;
     ArrayList<excercise_entry> list = new ArrayList<excercise_entry>();
     String yourJsonStringUrl = "http://metricsapi-dev-2sefhf4udj.elasticbeanstalk.com/records";
 
@@ -51,6 +54,14 @@ public class excercise_search_activity extends AppCompatActivity {
         overridePendingTransition(0, 0);
         setContentView(R.layout.full_toolbar_excercise_search);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        editName = (EditText) findViewById(R.id.searchBar);
+        search = (ImageButton) findViewById(R.id.searchExcercise);
+        search.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new AsyncTaskSearchParseJson().execute();
+            }
+        });
 
         lView = (ListView) findViewById(R.id.workoutList);
         lView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -208,6 +219,79 @@ public class excercise_search_activity extends AppCompatActivity {
                     temp.activity_primary_muscles = parse.get("activity_primary_muscles").toString();
                     temp.thumbnail = parse.get("image_0").toString();
                     list.add(temp);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String strFromDoInBg) {
+            adapter.notifyDataSetChanged();
+            //TODO: Fix the thumbnail, plus need to add search functionality
+        }
+    }
+
+    public class AsyncTaskSearchParseJson extends AsyncTask<String, String, String> {
+
+        final String TAG = "AsyncTaskParseJson.java";
+
+        // set your json string url here
+        String yourJsonStringUrl = "http://metricsapi-dev-2sefhf4udj.elasticbeanstalk.com/records";
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected String doInBackground(String... arg0) {
+            StringBuilder response  = new StringBuilder();
+
+            URL url = null;
+            try {
+                url = new URL(yourJsonStringUrl);
+                HttpURLConnection httpconn = (HttpURLConnection)url.openConnection();
+                if (httpconn.getResponseCode() == HttpURLConnection.HTTP_OK)
+                {
+                    BufferedReader input = new BufferedReader(new InputStreamReader(httpconn.getInputStream()),8192);
+                    String strLine = null;
+                    while ((strLine = input.readLine()) != null)
+                    {
+                        response.append(strLine);
+                    }
+                    input.close();
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            jsonText = response.toString();
+            parseJSON(jsonText);
+            return response.toString();
+        }
+
+        protected void parseJSON(String response)
+        {
+            list.clear();
+            JSONObject mainResponseObject = null;
+            try {
+                mainResponseObject = new JSONObject(response);
+                JSONArray array = new JSONArray(mainResponseObject.get("Records").toString());
+                for(int i =0; i<array.length(); i++)
+                {
+                    JSONObject parse = array.getJSONObject(i);
+                    String actName = parse.get("activity_name").toString();
+
+                    String editUpper = editName.getText().toString().toUpperCase();
+                    String activityUpper = actName.toUpperCase();
+                    if(activityUpper.contains(editUpper) && editUpper != "")
+                    {
+                        excercise_entry temp = new excercise_entry();
+                        temp.activity_name = parse.get("activity_name").toString();
+                        temp.activity_primary_muscles = parse.get("activity_primary_muscles").toString();
+                        temp.thumbnail = parse.get("image_0").toString();
+                        list.add(temp);
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

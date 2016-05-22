@@ -16,6 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:titleTextColor="@color/colorAccent"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
@@ -30,6 +31,61 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="musclemetrics.musclemetricsandroidapp.one_excercise_activity">
+
+        <info.hoang8f.android.segmented.SegmentedGroup
+            xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/segmented2"
+            android:layout_width="wrap_content"
+            android:paddingTop="20dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:checkedButton="@+id/standard"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            segmentedgroup:sc_border_width="2dp"
+            segmentedgroup:sc_corner_radius="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <RadioButton
+                android:id="@+id/burnout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Burnout"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/dropset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Drop Set"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/standard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Standard"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/pyramid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pyramid"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/fivexfive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Five x Five"
+                style="@style/RadioButton" />
+        </info.hoang8f.android.segmented.SegmentedGroup>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/bottomToolbar"
@@ -86,6 +142,348 @@
             </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:text="Set Type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/setType" />
+
+        <info.hoang8f.android.segmented.SegmentedGroup
+            android:id="@+id/segmented3"
+            android:layout_width="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:sc_border_width="2dp"
+            app:sc_corner_radius="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/numberSets"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <RadioButton
+                android:id="@+id/one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="1"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="2"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="3"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/four"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="4"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="5"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/six"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="6"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/seven"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="7"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/eight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="8"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/nine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="9"
+                style="@style/RadioButton" />
+
+            <RadioButton
+                android:id="@+id/ten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="10"
+                style="@style/RadioButton" />
+        </info.hoang8f.android.segmented.SegmentedGroup>
+
+        <TextView
+            android:text="Number of Sets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:id="@+id/numberSets"
+            android:layout_below="@+id/segmented2"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:text="SET"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bottomToolbar"
+            android:id="@+id/setButton"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+
+        <TextView
+            android:text="Rest Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/setButton"
+            android:layout_toLeftOf="@+id/numberSets"
+            android:layout_toStartOf="@+id/numberSets"
+            android:id="@+id/restText" />
+
+        <TextView
+            android:text="Seconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/restText"
+            android:layout_toRightOf="@+id/numberSets"
+            android:layout_toEndOf="@+id/numberSets"
+            android:id="@+id/secondText" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:text="0"
+            android:textAlignment="center"
+            android:id="@+id/editSeconds"
+            android:layout_alignBaseline="@+id/restText"
+            android:layout_alignBottom="@+id/restText"
+            android:layout_alignLeft="@+id/setType"
+            android:layout_alignStart="@+id/setType"
+            android:layout_alignRight="@+id/setType"
+            android:layout_alignEnd="@+id/setType" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/segmented3"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_above="@+id/editSeconds">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:text=""
+                    android:hint="Set 1"
+                    android:layout_weight="1"
+                    android:cursorVisible="false"
+                    android:ems="10"
+                    android:background="@drawable/bordersets"
+                    android:id="@+id/editOne" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:ems="10"
+                    android:id="@+id/editTwo"
+                    android:background="@drawable/bordersets"
+                    android:text=""
+                    android:hint="Set 2"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:background="@drawable/bordersets"
+                    android:textAlignment="center"
+                    android:ems="10"
+                    android:id="@+id/editThree"
+                    android:text=""
+                    android:hint="Set 3"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:background="@drawable/bordersets"
+                    android:text=""
+                    android:hint="Set 4"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:id="@+id/editFour" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:background="@drawable/bordersets"
+                    android:ems="10"
+                    android:id="@+id/editFive"
+                    android:text=""
+                    android:hint="Set 5"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:background="@drawable/bordersets"
+                    android:ems="10"
+                    android:id="@+id/editSix"
+                    android:text=""
+                    android:hint="Set 6"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:background="@drawable/bordersets"
+                    android:text=""
+                    android:hint="Set 7"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:id="@+id/editSeven" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:background="@drawable/bordersets"
+                    android:ems="10"
+                    android:id="@+id/editEight"
+                    android:text=""
+                    android:hint="Set 8"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:background="@drawable/bordersets"
+                    android:ems="10"
+                    android:id="@+id/editNine"
+                    android:text=""
+                    android:hint="Set 9"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:text=""
+                    android:visibility="invisible"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:id="@+id/editRandom" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:background="@drawable/bordersets"
+                    android:ems="100"
+                    android:id="@+id/editTen"
+                    android:text=""
+                    android:hint="Set 10"
+                    android:layout_weight="1"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:ems="10"
+                    android:id="@+id/editRandom2"
+                    android:text=""
+                    android:visibility="invisible"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -1,9 +1,11 @@
 package musclemetrics.musclemetricsandroidapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,7 @@ import java.util.ArrayList;
  * Created by JerunTrajko on 5/21/16.
  */
 
-public class MyCustomAdapterAllWorkouts extends BaseAdapter implements ListAdapter {
+public class MyCustomAdapterAllWorkouts extends BaseAdapter implements ListAdapter{
     private ArrayList<String> list = new ArrayList<String>();
     private Context context;
 
@@ -47,6 +49,7 @@ public class MyCustomAdapterAllWorkouts extends BaseAdapter implements ListAdapt
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -65,13 +68,13 @@ public class MyCustomAdapterAllWorkouts extends BaseAdapter implements ListAdapt
                         one_workout_activity.class);
                 intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(intentApp);
+                ((Activity)context).finish();
             }
         });
 
         //Handle buttons and add onClickListeners
         ImageButton deleteBtn = (ImageButton)view.findViewById(R.id.delete_btn);
         deleteBtn.setFocusable(false);
-        //ImageButton addBtn = (ImageButton)view.findViewById(R.id.add_btn);
 
         deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -97,15 +100,6 @@ public class MyCustomAdapterAllWorkouts extends BaseAdapter implements ListAdapt
                 alert.show();
             }
         });
-        /*
-        addBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //do something
-                notifyDataSetChanged();
-            }
-        });
-        */
 
         return view;
     }

@@ -10,10 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import info.hoang8f.android.segmented.SegmentedGroup;
 
 /**
  * Created by JerunTrajko on 1/15/16.
@@ -142,6 +145,7 @@ public class one_workout_activity extends AppCompatActivity {
                         excercise_search_activity.class);
                 intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(intentApp);
+                finish();
             }
         });
     }

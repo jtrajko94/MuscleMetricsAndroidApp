@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -160,8 +161,7 @@ public class all_workouts_activity extends AppCompatActivity {
                 alertDialog.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 String name = input.getText().toString();
-                                if(name.compareTo("") != 0)
-                                {
+                                if(name.compareTo("") != 0) {
                                     list.add(name);
                                 }
                                 else
