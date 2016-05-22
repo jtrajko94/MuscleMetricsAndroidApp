@@ -1,45 +1,52 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
 
     <ImageButton
+        android:src="@drawable/abc_btn_colored_material"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:id="@+id/thumbnail"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_toLeftOf="@id/list_item_string"
-        android:background="@drawable/delete_button"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:text="Add" />
+        android:layout_alignBottom="@+id/primary_muscle"
+        android:layout_toLeftOf="@+id/primary_muscle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
+        android:text="Excercise Name"
+        android:textSize="13dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="54dp"
+        android:layout_marginStart="54dp"
         android:id="@+id/list_item_string"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:paddingLeft="8dp"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/primary_muscle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_alignBottom="@id/list_item_string"
-        android:paddingLeft="8dp"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp" />
 
     <ImageButton
-        android:id="@+id/add_btn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignRight="@id/list_item_string"
         android:background="@drawable/add_button"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:text="Add" />
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/add_btn"
+        android:layout_alignBottom="@+id/primary_muscle"
+        android:layout_alignTop="@+id/list_item_string" />
+
+    <TextView
+        android:text="Muscles Worked"
+        android:textSize="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/primary_muscle"
+        tools:text="weird"
+        android:layout_below="@+id/list_item_string"
+        android:layout_alignLeft="@+id/list_item_string"
+        android:layout_alignStart="@+id/list_item_string" />
 
 </RelativeLayout>

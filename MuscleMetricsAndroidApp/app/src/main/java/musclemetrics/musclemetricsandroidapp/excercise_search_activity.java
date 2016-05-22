@@ -163,11 +163,6 @@ public class excercise_search_activity extends AppCompatActivity {
         // set your json string url here
         String yourJsonStringUrl = "http://metricsapi-dev-2sefhf4udj.elasticbeanstalk.com/records";
 
-        // contacts JSONArray
-        JSONArray dataJsonArr = null;
-        String tempVidURL = "";
-        String tempToolName = "";
-
         @Override
         protected void onPreExecute() {}
 
@@ -190,10 +185,8 @@ public class excercise_search_activity extends AppCompatActivity {
                     input.close();
                 }
             } catch (MalformedURLException e) {
-                Log.d("here", "1");
                 e.printStackTrace();
             } catch (IOException e) {
-                Log.d("here", "2");
                 e.printStackTrace();
             }
             jsonText = response.toString();
@@ -207,7 +200,6 @@ public class excercise_search_activity extends AppCompatActivity {
             try {
                 mainResponseObject = new JSONObject(response);
                 JSONArray array = new JSONArray(mainResponseObject.get("Records").toString());
-                Log.d("testing", "in parse function");
                 for(int i =0; i<array.length(); i++)
                 {
                     JSONObject parse = array.getJSONObject(i);
@@ -215,7 +207,6 @@ public class excercise_search_activity extends AppCompatActivity {
                     temp.activity_name = parse.get("activity_name").toString();
                     temp.activity_primary_muscles = parse.get("activity_primary_muscles").toString();
                     temp.thumbnail = parse.get("image_0").toString();
-                    Log.d("test", temp.activity_name);
                     list.add(temp);
                 }
             } catch (JSONException e) {
@@ -226,7 +217,7 @@ public class excercise_search_activity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String strFromDoInBg) {
             adapter.notifyDataSetChanged();
-            //TODO: Fix the layout per line on the activity list, plus need to add search functionality
+            //TODO: Fix the thumbnail, plus need to add search functionality
         }
     }
 }

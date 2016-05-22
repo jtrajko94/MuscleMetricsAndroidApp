@@ -13,6 +13,8 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -27,11 +29,6 @@ public class MyCustomAdapterSearchExcercises extends BaseAdapter implements List
 
     public MyCustomAdapterSearchExcercises(ArrayList<excercise_entry> list, Context context) {
         this.list = list;
-        Log.d("here", Integer.toString(list.size()));
-        Log.d("here", "in constructor");
-        for(int i=0; i<list.size(); i++) {
-            Log.d("infooooooo", list.get(i).activity_name);
-        }
         this.context = context;
     }
 
@@ -60,13 +57,15 @@ public class MyCustomAdapterSearchExcercises extends BaseAdapter implements List
         }
 
         //Handle TextView and display string from your list
-        TextView listItemText = (TextView)view.findViewById(R.id.list_item_string);
-        listItemText.setText(list.get(position).activity_name);
+        TextView name = (TextView)view.findViewById(R.id.list_item_string);
+        name.setText(list.get(position).activity_name);
+
+        TextView muscles = (TextView)view.findViewById(R.id.primary_muscle);
+        muscles.setText("Primary Muscle: " + list.get(position).activity_primary_muscles);
 
         //Handle buttons and add onClickListeners
         ImageButton addBtn = (ImageButton)view.findViewById(R.id.add_btn);
         addBtn.setFocusable(false);
-        //ImageButton addBtn = (ImageButton)view.findViewById(R.id.add_btn);
 
         addBtn.setOnClickListener(new View.OnClickListener(){
             @Override
