@@ -1,76 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:weightSum="1">
 
-        <TextView
-            android:text="MyMetrics"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/mmtitle" />
+    <ImageView
+        android:src="@drawable/logo"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:id="@+id/imageView1" />
+
+    <TextView
+        android:text="MyMetrics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp"
+        android:paddingBottom="15dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/mmtitle" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColor="@color/colorAccent"
         android:layout_below="@+id/mmtitle"
         android:layout_centerHorizontal="true"
         android:id="@+id/emailText"
-        android:hint="email" />
+        android:background="@drawable/edit_border"
+        android:hint="  email" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
+        android:textColor="@color/colorAccent"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="@drawable/edit_border"
         android:layout_below="@+id/emailText"
         android:layout_alignStart="@+id/emailText"
         android:id="@+id/passwordText"
         android:layout_alignEnd="@+id/emailText"
-        android:hint="password" />
+        android:hint=" password" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_facebook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:layout_gravity="center_horizontal"
         android:text="  connect_with_facebook"
         android:layout_below="@+id/passwordText"
         android:layout_alignStart="@+id/passwordText"
         android:layout_alignEnd="@+id/passwordText" />
 
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="11dp"
-        android:layout_above="@+id/mmtitle"
-        android:layout_alignStart="@+id/emailText"
-        android:layout_alignEnd="@+id/emailText">
-
-        <ImageView
-            android:src="@drawable/add_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView1" />
-
-    </LinearLayout>
-
     <com.google.android.gms.common.SignInButton
         android:id="@+id/login_google"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/login_facebook"
         android:layout_alignStart="@+id/login_facebook"
         android:layout_alignEnd="@+id/login_facebook" />
 
+    <Button
+        android:text=" Create an Account"
+        android:layout_width="220dp"
+        android:layout_marginTop="25dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_google"
+        android:layout_alignStart="@+id/login_google"
+        android:background="@color/colorAccent"
+        android:textColor="#fff"
+        android:id="@+id/signup"
+        android:layout_alignEnd="@+id/login_google" />
 
-</RelativeLayout>
+</LinearLayout>
