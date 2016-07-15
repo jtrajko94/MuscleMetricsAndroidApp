@@ -45,7 +45,7 @@ public class excercise_search_activity extends AppCompatActivity {
     ImageButton search;
     EditText editName;
     ArrayList<excercise_entry> list = new ArrayList<excercise_entry>();
-    String yourJsonStringUrl = "http://metricsapi-dev-2sefhf4udj.elasticbeanstalk.com/records";
+    String yourJsonStringUrl = "https://mymetricsapi.herokuapp.com/records";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,7 +172,7 @@ public class excercise_search_activity extends AppCompatActivity {
         final String TAG = "AsyncTaskParseJson.java";
 
         // set your json string url here
-        String yourJsonStringUrl = "http://metricsapi-dev-2sefhf4udj.elasticbeanstalk.com/records";
+        String yourJsonStringUrl = "https://mymetricsapi.herokuapp.com/records";
 
         @Override
         protected void onPreExecute() {}

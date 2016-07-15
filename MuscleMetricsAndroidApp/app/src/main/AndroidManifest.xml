@@ -29,6 +29,10 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDrMh_JhjZmjKSOdcxFspubCSq0BnbVlpI"/>
 
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+
         <activity
             android:name=".workout_activity"
             android:label="@string/app_name"
@@ -183,6 +187,26 @@
         </activity>
         <activity
             android:name=".all_workouts_activity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".login_activity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".signup_activity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">

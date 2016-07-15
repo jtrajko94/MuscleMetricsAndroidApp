@@ -35,6 +35,8 @@ public class calendar_activity extends AppCompatActivity {
         overridePendingTransition(0, 0);
         setContentView(R.layout.full_toolbar_cal);
 
+        calendar = (CalendarView) findViewById(R.id.calendarView);
+
         //Set the navigation toolbar at the bottom of the page
         setBottomToolbar();
 
@@ -53,7 +55,6 @@ public class calendar_activity extends AppCompatActivity {
     //Set the calendar settings
     private void initializeCalendar()
     {
-        calendar = (CalendarView) findViewById(R.id.calendarView);
         // sets whether to show the week number.
         calendar.setShowWeekNumber(false);
         // sets the first day of week according to Calendar.

@@ -29,6 +29,17 @@ public class library_activity extends AppCompatActivity {
 
         //Set Top Toolbar
         setTopToolbar();
+
+        final Button work = (Button) findViewById(R.id.login);
+        work.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(library_activity.this,
+                        login_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intentApp);
+                finish();
+            }
+        });
     }
 
     @Override

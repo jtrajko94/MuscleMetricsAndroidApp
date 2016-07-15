@@ -7,10 +7,11 @@ android {
 
     defaultConfig {
         applicationId "musclemetrics.musclemetricsandroidapp"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -34,10 +35,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
-    compile 'com.google.android.gms:play-services:8.4.0'
-    compile 'com.google.android.gms:play-services-maps:8.4.0'
-    compile 'com.google.android.gms:play-services-ads:8.4.0'
-    compile 'com.google.android.gms:play-services-wearable:8.4.0'
+    compile 'com.google.android.gms:play-services:9.0.2'
+    compile 'com.google.android.gms:play-services-maps:9.0.2'
+    compile 'com.google.android.gms:play-services-ads:9.0.2'
+    compile 'com.google.android.gms:play-services-wearable:9.0.2'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.0'
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'info.hoang8f:android-segmented:1.0.6'
@@ -46,5 +47,9 @@ dependencies {
     releaseCompile(name: 'debug/focusmotion-mobile', ext:'aar')
     debugCompile(name: 'debug/focusmotion-mobile-pebble', ext:'aar')
     releaseCompile(name: 'release/focusmotion-mobile-pebble', ext:'aar')
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.google.android.gms:play-services-auth:9.0.2'
 }
+
+apply plugin: 'com.google.gms.google-services'
 

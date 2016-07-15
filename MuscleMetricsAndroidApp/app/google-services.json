@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "616727247336",
+    "project_id": "mymetrics-75355821"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:616727247336:android:e62fe03b715bbd33",
+        "android_client_info": {
+          "package_name": "musclemetrics.musclemetricsandroidapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "616727247336-4p839gjtg4i55iuu1h5opine3s24h6rr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "musclemetrics.musclemetricsandroidapp",
+            "certificate_hash": "99806B2D0EBA572BECF88E5938B06FDFFE3CF6E0"
+          }
+        },
+        {
+          "client_id": "616727247336-8g1r8c1o1floe1j2p7d0q98skcv7l1o2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhlYZl18kvXe0PjA-1qbaTLNx3dkhhGdY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
