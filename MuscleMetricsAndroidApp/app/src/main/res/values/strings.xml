@@ -14,7 +14,13 @@
     <string name="connect">Connect</string>
     <string name="no_results">No Results</string>
     <string name="Workout">Workout Page</string>
+    <string name="choose">Choose System of Measurement...</string>
 
     <string name="facebook_app_id">1731339087104767</string>
+    <string-array name="brew_array">
+        <item> Choose System of Measurement... </item>
+        <item> American (pounds, feet, inches) </item>
+        <item> Metric (kilograms, meters, centimeters) </item>
+    </string-array>
 
 </resources>

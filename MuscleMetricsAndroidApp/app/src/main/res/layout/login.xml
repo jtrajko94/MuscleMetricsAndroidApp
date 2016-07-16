@@ -53,6 +53,14 @@
         android:layout_alignEnd="@+id/emailText"
         android:hint=" password" />
 
+    <Button
+        android:text=" Login"
+        android:layout_width="220dp"
+        android:layout_height="30dp"
+        android:background="@color/colorAccent"
+        android:textColor="#fff"
+        android:id="@+id/login" />
+
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_facebook"
         android:layout_width="220dp"
@@ -78,7 +86,7 @@
         android:text=" Create an Account"
         android:layout_width="220dp"
         android:layout_marginTop="25dp"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_below="@+id/login_google"
         android:layout_alignStart="@+id/login_google"
         android:background="@color/colorAccent"

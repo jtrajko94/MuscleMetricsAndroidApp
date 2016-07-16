@@ -40,6 +40,7 @@ public class login_activity extends AppCompatActivity implements GoogleApiClient
     SignInButton googleButton;
     LoginButton facebookButton;
     CallbackManager callbackManager;
+    Button signUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,16 @@ public class login_activity extends AppCompatActivity implements GoogleApiClient
             }
         });
 
+        signUp = (Button) findViewById(R.id.signup);
+        signUp.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intentApp = new Intent(login_activity.this,
+                        signup_activity.class);
+                intentApp.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intentApp);
+                finish();
+            }
+        });
 
 
     }
@@ -135,12 +146,6 @@ public class login_activity extends AppCompatActivity implements GoogleApiClient
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     @Override
