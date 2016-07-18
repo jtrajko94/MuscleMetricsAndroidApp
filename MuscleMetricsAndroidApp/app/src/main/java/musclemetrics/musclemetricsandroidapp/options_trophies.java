@@ -2,23 +2,34 @@ package musclemetrics.musclemetricsandroidapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+
 /**
  * Created by JerunTrajko on 1/18/16.
  */
-public class options_trophies extends AppCompatActivity{
+public class options_trophies extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
         //implements NavigationView.OnNavigationItemSelectedListener {
+
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +40,19 @@ public class options_trophies extends AppCompatActivity{
 
         setTopToolbar();
         setBottomToolbar();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this , this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient),
+                9011);
+
     }
 
     @Override
@@ -162,5 +186,22 @@ public class options_trophies extends AppCompatActivity{
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        Log.d("Connected", "Yes");
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.d("Connected", "No");
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.d("Connection", "Failed");
     }
 }
